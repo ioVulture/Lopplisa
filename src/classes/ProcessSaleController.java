@@ -22,10 +22,10 @@ public class ProcessSaleController {
    
        }
 
-    public void makeNewSale() throws IOException {
+    public void makeNewSale(int total, long time) throws IOException {
  
-        Date time = new Date();
-        String fileName =  time.getTime() + "-purchases.txt";
+        
+        String fileName =  total + "-" + time + "-purchases.txt";
         try(FileWriter fw = new FileWriter("purchases/" + fileName, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))

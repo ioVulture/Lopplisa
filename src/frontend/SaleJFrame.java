@@ -1,10 +1,16 @@
 package frontend;
 
 import classes.ProcessSaleController;
+import classes.PurchaseController;
 import classes.Sellers;
+import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +21,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     static Sellers sellers = new Sellers();
     public SaleJFrame() {
         initComponents();
+        getFilesNames();
     }
 
     @SuppressWarnings("unchecked")
@@ -319,17 +326,35 @@ public class SaleJFrame extends javax.swing.JFrame {
     public void setErrorLabelText(String msg) {
         errorLabel.setText(msg);
     }
+   
+    public void getFilesNames() {
+       PurchaseController purchaseController = new PurchaseController();
+       TreeMap<Long, Integer> allPurchasesMap = purchaseController.getAllPurchasesMap();
+        DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
+       for (Entry entry : allPurchasesMap.entrySet()) {
+            Object[] row = {entry.getKey(), entry.getValue()};
+            puchaseTableModel.addRow(row);
+       }
+       
+    }
+    
     private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
+        int grandTotal = processSaleController.getSale().getTotal();
+        Date date = new Date();
+        long time = date.getTime();
         try {
-            processSaleController.makeNewSale();
-         
+            processSaleController.makeNewSale(grandTotal, time);
         } catch (IOException ex) {
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+        
         grandTotalOutput.setText("");
         quantityInput.setText("");
         itemIdInput.setText("");
+        DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
+        Object[] row = {time, grandTotal};
+        puchaseTableModel.addRow(row);
+             
         DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
         while (model.getRowCount() > 0) {
             model.removeRow(0);
