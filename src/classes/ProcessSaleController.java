@@ -26,7 +26,7 @@ public class ProcessSaleController {
  
         Date time = new Date();
         String fileName =  time.getTime() + "-purchases.txt";
-        try(FileWriter fw = new FileWriter(fileName, true);
+        try(FileWriter fw = new FileWriter("purchases/" + fileName, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {
