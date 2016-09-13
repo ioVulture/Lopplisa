@@ -46,7 +46,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         saleTable1 = new javax.swing.JTable();
         sendToServer = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        deleteFile = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -171,7 +171,12 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         sendToServer.setText("Skicka till server");
 
-        jButton1.setText("Makulera");
+        deleteFile.setText("Makulera");
+        deleteFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteFileActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -223,7 +228,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(deleteFile))
                         .addGap(0, 89, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
@@ -272,7 +277,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(deleteFile)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -369,6 +374,38 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void populateSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateSellersActionPerformed
         sellers.populateSellers();// TODO add your handling code here:
     }//GEN-LAST:event_populateSellersActionPerformed
+    private int getRowByValue(DefaultTableModel model, Object value) {
+        for (int i = model.getRowCount() - 1; i >= 0; --i) {
+            System.out.println("modelValue:" + model.getValueAt(i, 0));
+            if (model.getValueAt(i, 0).equals(value)) {
+                    // what if value is not unique?
+                 return i;
+            }
+
+        }
+        return -1;
+    }
+    private void deleteFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFileActionPerformed
+       PurchaseController purchaseController = new PurchaseController();
+       Long id = 1473761053007L;
+       Integer total = 106;
+        DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
+       int rowInt = getRowByValue(purchaseTableModel, id);
+       if (rowInt != -1) {
+        System.out.println("Delete row val:" + purchaseTableModel.getValueAt(rowInt, 0)); 
+       }
+        try {
+            boolean deletePurchase = purchaseController.deletePurchase(id, total);
+            if (deletePurchase) {
+               
+               purchaseTableModel.removeRow(rowInt);
+                
+                 
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_deleteFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,10 +445,10 @@ public class SaleJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
+    private javax.swing.JButton deleteFile;
     public javax.swing.JLabel errorLabel;
     private javax.swing.JTextField grandTotalOutput;
     private javax.swing.JTextField itemIdInput;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

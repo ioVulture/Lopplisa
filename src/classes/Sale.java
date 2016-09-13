@@ -32,8 +32,8 @@ public class Sale {
             System.out.println(entry.getKey() + "/" + entry.getValue());
         }
        System.out.println("ContainsKey:" + sellersMap.containsKey(code));
-       if (sellersMap.containsKey(code)) {
-        sli.add(new SalesLineItem(price, code));
+       if (sellersMap.containsKey(code.toUpperCase())) {
+        sli.add(new SalesLineItem(price, code.toUpperCase()));
        } else {
             
             SaleJFrame sjf = new SaleJFrame();
