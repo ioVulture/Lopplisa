@@ -1,0 +1,23 @@
+
+ NEW SALE: 
+M11-23
+C02-232
+23-22
+33-22
+22-3
+the text
+more text
+22-3
+
+12-2
+
+34-23
+
+{"purchase":[
+{"code:"23,"price"2}
+
+{"code:"22,"price"12}
+
+{"code:"32,"price"2}
+
+]}
