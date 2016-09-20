@@ -2,7 +2,9 @@ package frontend;
 
 import classes.ProcessSaleController;
 import classes.PurchaseController;
+import classes.Sale;
 import classes.Sellers;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import java.io.FileNotFoundException;
@@ -81,9 +83,19 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         itemIdInput.setToolTipText("Enter Item Id");
         itemIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        itemIdInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                itemIdInputKeyPressed(evt);
+            }
+        });
 
         quantityInput.setToolTipText("Enter quantity of the item");
         quantityInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        quantityInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                quantityInputKeyPressed(evt);
+            }
+        });
 
         purchaseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -297,7 +309,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                         
             try {
                 if (processSaleController.codeExist(code)) {
-                    System.out.println("code extist:" + processSaleController.codeExist(code));
+                    
                     try {
                         
                         processSaleController.addItem(price, code);
@@ -321,6 +333,9 @@ public class SaleJFrame extends javax.swing.JFrame {
                     itemIdInput.setText("");
                 } else {
                     errorLabel.setText("Koden finns inte");
+                }
+                if (!itemIdInput.hasFocus()) {
+                    itemIdInput.requestFocus();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -406,6 +421,36 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteFileActionPerformed
 
+    private void itemIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemIdInputKeyPressed
+        try {
+            Sale sale = new Sale();
+            
+            if ( evt.getKeyCode() == KeyEvent.VK_ENTER && sale.codeMatchSellers(itemIdInput.getText())) {
+                errorLabel.setText("");
+                if (!quantityInput.hasFocus()) {
+                    quantityInput.requestFocus();
+                }
+            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && !sale.codeMatchSellers(itemIdInput.getText())){
+                errorLabel.setText("Säljarkoden finns inte");
+            }
+            /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
+                System.out.println("textLength:" + itemIdInput.getText().length());
+                System.out.println("keyCode:" + evt.getKeyCode());
+                System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
+               // errorLabel.setText("Säljarkoden finns inte");
+            } */
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_itemIdInputKeyPressed
+
+    private void quantityInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityInputKeyPressed
+     
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            addItemButton.requestFocus();
+        }
+    }//GEN-LAST:event_quantityInputKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -436,7 +481,11 @@ public class SaleJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                processSaleController = new ProcessSaleController();
+                try {
+                    processSaleController = new ProcessSaleController();
+                } catch (IOException ex) {
+                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 new SaleJFrame().setVisible(true);
             }
         });

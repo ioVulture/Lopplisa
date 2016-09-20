@@ -15,16 +15,13 @@ public class Sale {
     private Map<String, Integer> sellersMap = new HashMap<>();
     private Sellers sellers = new Sellers();
   
-    public Sale() {
-         
+    public Sale() throws IOException {
+        this.sellersMap = sellers.getSellers();
         this.sli = new LinkedList<SalesLineItem>();
         
     }
 
     public void addSaleLineItem(int price, String code) throws FileNotFoundException, IOException {
-       this.sellersMap = sellers.getSellers();
-   
-       this.sellersMap =  sellersMap;
         
        for (Map.Entry<String, Integer> entry : sellersMap.entrySet())
         {
@@ -32,7 +29,7 @@ public class Sale {
             System.out.println(entry.getKey() + "/" + entry.getValue());
         }
        System.out.println("ContainsKey:" + sellersMap.containsKey(code));
-       if (sellersMap.containsKey(code.toUpperCase())) {
+       if (codeMatchSellers(code.toUpperCase())) {
         sli.add(new SalesLineItem(price, code.toUpperCase()));
        } else {
             
@@ -41,7 +38,13 @@ public class Sale {
             
        }
     }
-
+    public boolean codeMatchSellers (String code) throws IOException {
+        if (sellersMap.containsKey(code.toUpperCase())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public LinkedList<SalesLineItem> getList() {
         return this.sli;
     }

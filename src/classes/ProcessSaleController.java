@@ -16,7 +16,7 @@ public class ProcessSaleController {
     private Map<String, Integer> sellersMap = new HashMap<>();
     private Sellers sellers = new Sellers();
     
-    public ProcessSaleController() {
+    public ProcessSaleController() throws IOException {
         System.out.println("1111");
         sale = new Sale();
    
