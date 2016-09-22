@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class SaleJFrame extends javax.swing.JFrame {
@@ -354,30 +355,37 @@ public class SaleJFrame extends javax.swing.JFrame {
             Object[] row = {entry.getKey(), entry.getValue()};
             puchaseTableModel.addRow(row);
        }
-       
     }
-    
-    private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
+    private boolean proceedWithSale() {
         int grandTotal = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        try {
-            processSaleController.makeNewSale(grandTotal, time);
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        int res = JOptionPane.showConfirmDialog(null, "Att betala:" + grandTotal + "kr", "", JOptionPane.YES_NO_OPTION);
+       
+        if(res == JOptionPane.YES_OPTION) {
+            try {
+                processSaleController.makeNewSale(grandTotal, time);
+            } catch (IOException ex) {
+                Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            grandTotalOutput.setText("");
+            quantityInput.setText("");
+            itemIdInput.setText("");
+            DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
+            Object[] row = {time, grandTotal};
+            puchaseTableModel.addRow(row);
+
+            DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
+            while (model.getRowCount() > 0) {
+                model.removeRow(0);
+            }
+            itemIdInput.requestFocus();
         }
-        
-        grandTotalOutput.setText("");
-        quantityInput.setText("");
-        itemIdInput.setText("");
-        DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
-        Object[] row = {time, grandTotal};
-        puchaseTableModel.addRow(row);
-             
-        DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
-        while (model.getRowCount() > 0) {
-            model.removeRow(0);
-        }
+        return false;
+    }
+    private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
+        proceedWithSale();
     }//GEN-LAST:event_newSaleButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -386,7 +394,11 @@ public class SaleJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void populateSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateSellersActionPerformed
-        sellers.populateSellers();// TODO add your handling code here:
+        try {
+            sellers.populateSellers();// TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_populateSellersActionPerformed
     private int getRowByValue(DefaultTableModel model, Object value) {
         for (int i = model.getRowCount() - 1; i >= 0; --i) {
