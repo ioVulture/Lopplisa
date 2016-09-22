@@ -1,11 +1,11 @@
 package classes;
 
 
-public class SalesLineItem {
+public class SoldItem {
     private int price = 0;
     private String code = "";
     
-    public SalesLineItem(int price, String code) {
+    public SoldItem(int price, String code) {
 
         this.code = code;
         this.price = price;

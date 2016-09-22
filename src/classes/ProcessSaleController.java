@@ -14,10 +14,10 @@ public class ProcessSaleController {
 
     private Sale sale;
     private Map<String, Integer> sellersMap = new HashMap<>();
-    private Sellers sellers = new Sellers();
+    private SellersController sellers = new SellersController();
     
     public ProcessSaleController() throws IOException {
-        System.out.println("1111");
+    
         sale = new Sale();
    
        }
@@ -31,8 +31,14 @@ public class ProcessSaleController {
         PrintWriter out = new PrintWriter(bw))
         {
             out.print("{\"purchase\":[");
-            for (SalesLineItem soldItem: sale.getList()) {
-                out.print("{\"code:\"" + soldItem.getCode() + ",\"price:\"" + soldItem.getPrice() + "}");
+            int i = 0;
+            for (SoldItem soldItem : sale.getList()) {
+            
+                if (i != 0) {
+                    out.print(",");
+                }
+                out.print("{\"code\":\"" + soldItem.getCode() + "\",\"price\":" + soldItem.getPrice() + "}");
+                i++;
             }
             out.print("]}");
         } catch (IOException e) {
@@ -55,7 +61,7 @@ public class ProcessSaleController {
     }
     
     public void addItem(int price, String code) throws FileNotFoundException, IOException {
-        sale.addSaleLineItem(price, code);
+        sale.addSoldItem(price, code);
     }
 
     public Sale getSale() {

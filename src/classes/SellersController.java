@@ -26,29 +26,25 @@ import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.TreeMap;
 /**
  *
  * @author Rasmus_jobb
  */
-public class Sellers {
+public class SellersController {
   PropertiesHandler propertiesHandler = new PropertiesHandler();
- public Map<String, Integer> getSellers () throws FileNotFoundException, IOException{
+  
+ public TreeMap<String, Integer> getSellers () throws FileNotFoundException, IOException{
     new FileOutputStream("sellers.txt", true).close();
     Scanner scanner = new Scanner( new File("sellers.txt") );
-    System.out.println(scanner);
-    System.out.println(scanner.hasNext());
-     Map <String, Integer> sellerMap = new HashMap<>();
+    TreeMap <String, Integer> sellerMap = new TreeMap<>();
     if (scanner != null && scanner.hasNext()) {
         String text = scanner.next();
 
         ObjectMapper mapper = new ObjectMapper();
-
         JsonNode node = mapper.readValue(text, JsonNode.class);
-
         JsonNode brandNode = node.get("sellers");
 
-         //System.out.println("brandNode.isArray():" + brandNode.isArray());
-        
          final JsonNode arrNode = new ObjectMapper().readTree(text).get("sellers");
             if (arrNode.isArray()) {
                 for (final JsonNode objNode : arrNode) {
@@ -62,17 +58,14 @@ public class Sellers {
  }
  
     public void populateSellers() throws MalformedURLException, IOException {
-        String sellerCodes = "C02,M103,X18,C01,B12,M110,L03,X110";
+
         String urlProperty = propertiesHandler.getPropertyValue("remote.server.sellers.url");
-        System.out.println("url was:" + urlProperty);
         String passwordProperty = propertiesHandler.getPropertyValue("remote.server.password");
         String url = urlProperty + passwordProperty;
-        System.out.println("url was:" + url);
         URL sellerUrl = new URL(url);
         BufferedReader in = new BufferedReader(
         new InputStreamReader(sellerUrl.openStream()));
         String sellerString = in.readLine();
-        System.out.println(sellerString);
         String[] sellerCodeList = sellerString.split(",");
         
         try(FileWriter fw = new FileWriter("sellers.txt", false);
@@ -82,11 +75,10 @@ public class Sellers {
             out.print("{\"sellers\":[");
             int i = 0;
             for (String code: sellerCodeList) {
-                System.out.println("status:" + sellerCodeList.length);
                 if (i != 0) {
                     out.print(",");
                 }
-                out.print("{\"code\":\"" + code + "\",\"total\":0}\n");
+                out.print("{\"code\":\"" + code + "\",\"total\":0}");
                 
                 i++;
                 

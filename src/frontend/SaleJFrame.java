@@ -3,7 +3,7 @@ package frontend;
 import classes.ProcessSaleController;
 import classes.PurchaseController;
 import classes.Sale;
-import classes.Sellers;
+import classes.SellersController;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -21,7 +21,9 @@ import javax.swing.table.DefaultTableModel;
 public class SaleJFrame extends javax.swing.JFrame {
 
     static ProcessSaleController processSaleController;
-    static Sellers sellers = new Sellers();
+    static SellersController sellers = new SellersController();
+    PurchaseController purchaseController = new PurchaseController();
+    
     public SaleJFrame() {
         initComponents();
         getFilesNames();
@@ -183,6 +185,11 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
 
         sendToServer.setText("Skicka till server");
+        sendToServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendToServerActionPerformed(evt);
+            }
+        });
 
         deleteFile.setText("Ta bort försäljning");
         deleteFile.setToolTipText("");
@@ -301,10 +308,11 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         String itemIdInputText = itemIdInput.getText();
         String quantityInputText = quantityInput.getText();
+ 
         if (!itemIdInputText.isEmpty() && !quantityInputText.isEmpty()) {
             
          
-            String code = itemIdInputText;
+            String code = itemIdInputText.toUpperCase();
             int price = Integer.parseInt(quantityInputText);
 
                         
@@ -402,7 +410,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_populateSellersActionPerformed
     private int getRowByValue(DefaultTableModel model, Object value) {
         for (int i = model.getRowCount() - 1; i >= 0; --i) {
-            System.out.println("modelValue:" + model.getValueAt(i, 0));
+            //System.out.println("modelValue:" + model.getValueAt(i, 0));
             if (model.getValueAt(i, 0).equals(value)) {
                     // what if value is not unique?
                  return i;
@@ -436,13 +444,16 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void itemIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemIdInputKeyPressed
         try {
             Sale sale = new Sale();
+            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+                proceedWithSale();
+                
             
-            if ( evt.getKeyCode() == KeyEvent.VK_ENTER && sale.codeMatchSellers(itemIdInput.getText())) {
+            } else if ( evt.getKeyCode() == KeyEvent.VK_ENTER && sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
                 errorLabel.setText("");
                 if (!quantityInput.hasFocus()) {
                     quantityInput.requestFocus();
                 }
-            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && !sale.codeMatchSellers(itemIdInput.getText())){
+            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && !sale.codeMatchSellers(itemIdInput.getText().toUpperCase())){
                 errorLabel.setText("Säljarkoden finns inte");
             }
             /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
@@ -462,6 +473,14 @@ public class SaleJFrame extends javax.swing.JFrame {
             addItemButton.requestFocus();
         }
     }//GEN-LAST:event_quantityInputKeyPressed
+
+    private void sendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendToServerActionPerformed
+        try {
+            purchaseController.sendPurchasesToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sendToServerActionPerformed
 
     /**
      * @param args the command line arguments

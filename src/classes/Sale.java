@@ -10,27 +10,28 @@ import java.util.Map;
 
 public class Sale {
 
-    private LinkedList<SalesLineItem> sli;
+    private LinkedList<SoldItem> sli;
     
     private Map<String, Integer> sellersMap = new HashMap<>();
-    private Sellers sellers = new Sellers();
+    private SellersController sellers = new SellersController();
   
     public Sale() throws IOException {
         this.sellersMap = sellers.getSellers();
-        this.sli = new LinkedList<SalesLineItem>();
+        this.sli = new LinkedList<SoldItem>();
         
     }
 
-    public void addSaleLineItem(int price, String code) throws FileNotFoundException, IOException {
-        
+    public void addSoldItem(int price, String code) throws FileNotFoundException, IOException {
+       /* 
        for (Map.Entry<String, Integer> entry : sellersMap.entrySet())
         {
             
             System.out.println(entry.getKey() + "/" + entry.getValue());
         }
        System.out.println("ContainsKey:" + sellersMap.containsKey(code));
+               */
        if (codeMatchSellers(code.toUpperCase())) {
-        sli.add(new SalesLineItem(price, code.toUpperCase()));
+            sli.add(new SoldItem(price, code.toUpperCase()));
        } else {
             
             SaleJFrame sjf = new SaleJFrame();
@@ -45,7 +46,7 @@ public class Sale {
             return false;
         }
     }
-    public LinkedList<SalesLineItem> getList() {
+    public LinkedList<SoldItem> getList() {
         return this.sli;
     }
 
@@ -55,8 +56,8 @@ public class Sale {
 
     public int getTotal() {
         double total = 0.0;
-        for (Iterator<SalesLineItem> it = sli.iterator(); it.hasNext();) {
-            SalesLineItem sli1 = it.next();
+        for (Iterator<SoldItem> it = sli.iterator(); it.hasNext();) {
+            SoldItem sli1 = it.next();
             total += sli1.getPrice();
         }
         return (int) Math.round(total);
