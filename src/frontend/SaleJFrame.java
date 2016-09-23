@@ -26,6 +26,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     
     public SaleJFrame() {
         initComponents();
+        purchaseTable.removeColumn(purchaseTable.getColumnModel().getColumn(0));
         getFilesNames();
     }
 
@@ -109,7 +110,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false
@@ -365,14 +366,14 @@ public class SaleJFrame extends javax.swing.JFrame {
        }
     }
     private boolean proceedWithSale() {
-        int grandTotal = processSaleController.getSale().getTotal();
+        int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        int res = JOptionPane.showConfirmDialog(null, "Att betala:" + grandTotal + "kr", "", JOptionPane.YES_NO_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "Att betala:" + total + "kr", "", JOptionPane.YES_NO_OPTION);
        
         if(res == JOptionPane.YES_OPTION) {
             try {
-                processSaleController.makeNewSale(grandTotal, time);
+                processSaleController.makeNewSale(total, time);
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -381,7 +382,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             quantityInput.setText("");
             itemIdInput.setText("");
             DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
-            Object[] row = {time, grandTotal};
+            Object[] row = {time,total};
             puchaseTableModel.addRow(row);
 
             DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
