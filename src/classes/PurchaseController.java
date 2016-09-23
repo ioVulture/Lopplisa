@@ -32,12 +32,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class PurchaseController {
     private final String USER_AGENT = "Mozilla/5.0";
     PropertiesHandler propertiesHandler = new PropertiesHandler();
+    
     public TreeMap<Long, Integer> getAllPurchasesMap() {
         ArrayList<String> results = new ArrayList<String>();
         TreeMap<Long, Integer> resultMap = new TreeMap<Long, Integer>();
 
         File[] files = new File("purchases").listFiles();
-        //If this pathname does not denote a directory, then listFiles() returns null. 
+         
         String[] fileNameList;
         long key = -1;
         Integer total = -1;
@@ -52,6 +53,7 @@ public class PurchaseController {
           
             }
         }
+
         return resultMap;
     }
 
@@ -74,6 +76,7 @@ public class PurchaseController {
     public boolean sendPurchasesToServer() throws FileNotFoundException, IOException {
 
         Map<String, Integer> sellerTotals = getSellersTotals();
+                System.out.println("c02 results:" + sellerTotals.get("C02"));
         String postData = "postData=test";
         for (Map.Entry sellerTotal : sellerTotals.entrySet()) {
             postData = postData.concat("code:" + sellerTotal.getKey() + "-Total:" + sellerTotal.getValue() + ",");
@@ -113,7 +116,7 @@ public class PurchaseController {
         in.close();
 
         //print result
-        System.out.println(response.toString());
+        //System.out.println(response.toString());
 
         return false;
     }
@@ -126,8 +129,8 @@ public class PurchaseController {
         TreeMap<String, Integer> sellersMap = sellers.getSellers();
 
         for (File file : files) {
-             System.out.println("fileName:" + file.getName());
-            if (file.isFile() && !file.getName().contains("0-")) {
+            
+            if (file.isFile() && !file.getName().startsWith("0-")) {
                 
                 Scanner scanner = new Scanner(new File(file.getAbsolutePath()));
                 String text = scanner.next();
@@ -144,7 +147,8 @@ public class PurchaseController {
                             
                           
                         } */
-                         System.out.println("price:" + objNode.get("price").getIntValue());
+                        
+                         //System.out.println("price:" + objNode.get("price").getIntValue());
                            currentTotal = currentTotal + total;
                         sellersMap.put(code, currentTotal);
 
