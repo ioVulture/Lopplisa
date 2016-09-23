@@ -76,37 +76,39 @@ public class PurchaseController {
     public boolean sendPurchasesToServer() throws FileNotFoundException, IOException {
 
         Map<String, Integer> sellerTotals = getSellersTotals();
-                System.out.println("c02 results:" + sellerTotals.get("C02"));
-        String postData = "postData=test";
+                //System.out.println("c02 results:" + sellerTotals.get("C02"));
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("sellerTotals=");
         for (Map.Entry sellerTotal : sellerTotals.entrySet()) {
-            postData = postData.concat("code:" + sellerTotal.getKey() + "-Total:" + sellerTotal.getValue() + ",");
+            sb.append(sellerTotal.getKey() + ":" + sellerTotal.getValue() + ",");
+            
             //System.out.println("code:" + sellerTotal.getKey() +  " ---- total:" + sellerTotal.getValue());
         }
-        byte[] postDataBytes = postData.getBytes("UTF-8");
+       
         String urlString = propertiesHandler.getPropertyValue("remote.server.purchases.url") + propertiesHandler.getPropertyValue("remote.server.password");
         
         URL url = new URL(urlString);
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-       // System.out.println(postData);
+       System.out.println("________" + sb.toString() + "___________ \n");
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.setDoOutput(true);
-        con.getOutputStream().write(postData.getBytes("UTF-8"));
+        con.getOutputStream().write(sb.toString().getBytes("UTF-8"));
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(postData);
+        wr.writeBytes(sb.toString());
         wr.flush();
         wr.close();
 
         int responseCode = con.getResponseCode();
-       // System.out.println("\nSending 'POST' request to URL : " + url);
-        //System.out.println("Post parameters : " + postData);
-        //System.out.println("Response Code : " + responseCode);
+        //System.out.println("\nSending 'POST' request to URL : " + url);
+       
+        //System.out.println("data:" + sb.toString());
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
 
@@ -116,7 +118,7 @@ public class PurchaseController {
         in.close();
 
         //print result
-        //System.out.println(response.toString());
+        System.out.println(response.toString());
 
         return false;
     }
