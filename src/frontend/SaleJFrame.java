@@ -30,8 +30,10 @@ public class SaleJFrame extends javax.swing.JFrame {
     static ProcessSaleController processSaleController;
     static SellersController sellers = new SellersController();
     PurchaseController purchaseController = new PurchaseController();
+    Sale sale;
 
-    public SaleJFrame() {
+    public SaleJFrame() throws IOException {
+        this.sale = new Sale();
         initComponents();
         purchaseTable.removeColumn(purchaseTable.getColumnModel().getColumn(0));
         getFilesNames();
@@ -43,6 +45,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenu1 = new javax.swing.JMenu();
         newSaleButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -54,14 +57,16 @@ public class SaleJFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         grandTotalOutput = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        populateSellersButton = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        saleTable1 = new javax.swing.JTable();
-        sendToServer = new javax.swing.JButton();
+        salesTable = new javax.swing.JTable();
         deleteFile = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        removeSoldItem = new javax.swing.JButton();
+        menuBar = new javax.swing.JMenuBar();
+        menu = new javax.swing.JMenu();
+        advancedMenu = new javax.swing.JMenu();
+        sendToServerMenuItem = new javax.swing.JMenuItem();
+        getSellersMenuItem = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,6 +81,8 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane3.setViewportView(jTable1);
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loppis");
@@ -168,18 +175,10 @@ public class SaleJFrame extends javax.swing.JFrame {
         jLabel6.setText("Avslutade försäjningar");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
 
-        populateSellersButton.setText("Hämta säljare");
-        populateSellersButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                populateSellersActionPerformed(evt);
-            }
-        });
-        getContentPane().add(populateSellersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 109, -1));
-
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(errorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 31, 137, 14));
 
-        saleTable1.setModel(new javax.swing.table.DefaultTableModel(
+        salesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -202,24 +201,16 @@ public class SaleJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        saleTable1.setCellSelectionEnabled(true);
-        saleTable1.getTableHeader().setResizingAllowed(false);
-        saleTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(saleTable1);
-        saleTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (saleTable1.getColumnModel().getColumnCount() > 0) {
-            saleTable1.getColumnModel().getColumn(1).setResizable(false);
+        salesTable.setCellSelectionEnabled(true);
+        salesTable.getTableHeader().setResizingAllowed(false);
+        salesTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(salesTable);
+        salesTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (salesTable.getColumnModel().getColumnCount() > 0) {
+            salesTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 167, 190, 320));
-
-        sendToServer.setText("Skicka till server");
-        sendToServer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendToServerActionPerformed(evt);
-            }
-        });
-        getContentPane().add(sendToServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, -1, -1));
 
         deleteFile.setText("Ta bort försäljning");
         deleteFile.setToolTipText("");
@@ -230,20 +221,48 @@ public class SaleJFrame extends javax.swing.JFrame {
         });
         getContentPane().add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 129, -1));
 
-        jMenu1.setText("File");
+        removeSoldItem.setText("Ta bort vald rad");
+        removeSoldItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeSoldItemActionPerformed(evt);
+            }
+        });
+        getContentPane().add(removeSoldItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, -1, -1));
+
+        menu.setText("File");
+
+        advancedMenu.setText("Avancerat");
+
+        sendToServerMenuItem.setText("Skicka totaler till server");
+        sendToServerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendToServerMenuItemActionPerformed(evt);
+            }
+        });
+        advancedMenu.add(sendToServerMenuItem);
+
+        getSellersMenuItem.setText("Hämta säljare");
+        getSellersMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getSellersMenuItemActionPerformed(evt);
+            }
+        });
+        advancedMenu.add(getSellersMenuItem);
+
+        menu.add(advancedMenu);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem1.setText("Exit");
+        jMenuItem1.setText("Avsluta");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menu.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(menu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         getAccessibleContext().setAccessibleParent(this);
 
@@ -271,11 +290,9 @@ public class SaleJFrame extends javax.swing.JFrame {
                         Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    int grandTotal = processSaleController.getSale().getTotal();
-                    grandTotalOutput.setText(String.valueOf(grandTotal));
-
+                    updateGrandTotal();
                     Object[] row = {processSaleController.getSale().getListLength(), code, price};
-                    DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
+                    DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
                     model.addRow(row);
                     errorLabel.setText("");
                     quantityInput.setText("");
@@ -293,6 +310,12 @@ public class SaleJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addItemButtonActionPerformed
     public void setErrorLabelText(String msg) {
         errorLabel.setText(msg);
+    }
+
+    public void updateGrandTotal() {
+        int grandTotal = processSaleController.getSale().getTotal();
+        grandTotalOutput.setText(String.valueOf(grandTotal));
+
     }
 
     public void getFilesNames() {
@@ -327,7 +350,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             Object[] row = {time, total};
             puchaseTableModel.addRow(row);
 
-            DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
             while (model.getRowCount() > 0) {
                 model.removeRow(0);
             }
@@ -343,14 +366,6 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void populateSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateSellersActionPerformed
-        try {
-            sellers.populateSellers();
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_populateSellersActionPerformed
     private int getRowByValue(DefaultTableModel model, Object value) {
         for (int i = model.getRowCount() - 1; i >= 0; --i) {
 
@@ -401,11 +416,11 @@ public class SaleJFrame extends javax.swing.JFrame {
                 errorLabel.setText("Säljarkoden finns inte");
             }
             /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
-                System.out.println("textLength:" + itemIdInput.getText().length());
-                System.out.println("keyCode:" + evt.getKeyCode());
-                System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
-               // errorLabel.setText("Säljarkoden finns inte");
-            } */
+             System.out.println("textLength:" + itemIdInput.getText().length());
+             System.out.println("keyCode:" + evt.getKeyCode());
+             System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
+             // errorLabel.setText("Säljarkoden finns inte");
+             } */
         } catch (IOException ex) {
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -418,14 +433,6 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_quantityInputKeyPressed
 
-    private void sendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendToServerActionPerformed
-        try {
-            purchaseController.sendPurchasesToServer();
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_sendToServerActionPerformed
-
     private void purchaseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_purchaseTableMouseClicked
         DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
         if (evt.getClickCount() == 2) {
@@ -435,7 +442,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
                 Integer total = (Integer) purchaseTable.getValueAt(purchaseTable.getSelectedRow(), 0);
                 Long key = (Long) purchaseTable.getModel().getValueAt(purchaseTable.getSelectedRow(), 0);
-                System.out.println("key was:" + key + "  Value:" + total);
+                
                 String filePath = "purchases/" + total + "-" + key + "-purchases.txt";
 
                 Scanner scanner;
@@ -448,18 +455,27 @@ public class SaleJFrame extends javax.swing.JFrame {
                         ObjectMapper mapper = new ObjectMapper();
                         JsonNode node = mapper.readValue(text, JsonNode.class);
                         JsonNode brandNode = node.get("purchase");
-
+                        
                         final JsonNode arrNode = new ObjectMapper().readTree(text).get("purchase");
                         if (arrNode.isArray()) {
-                            DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
+                            DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
                             while (model.getRowCount() > 0) {
                                 model.removeRow(0);
                             }
-                            
+                            sale.resetSale();
                             for (final JsonNode objNode : arrNode) {
                                 String code = objNode.get("code").getTextValue();
                                 Integer price = objNode.get("price").getIntValue();
                                 Object[] row = {code, price};
+                                try {
+
+                                    processSaleController.addItem(price, code);
+                                    sale.addSoldItem(price, code);
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                                 model.addRow(row);
                             }
                             int rowToRemoveFromModel = getRowByValue(purchaseTableModel, key);
@@ -474,13 +490,70 @@ public class SaleJFrame extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }  
+            }
         }
     }//GEN-LAST:event_purchaseTableMouseClicked
 
+    private void getSellersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getSellersMenuItemActionPerformed
+        try {
+            sellers.populateSellers();
+            JOptionPane.showMessageDialog(null, "Försäljarlistan är nu uppdaterad och nollställd");
+
+        } catch (IOException ex) {
+
+            JOptionPane.showMessageDialog(null, "Kunde inte hämta försäljarlistan");
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_getSellersMenuItemActionPerformed
+
+    private void sendToServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendToServerMenuItemActionPerformed
+        try {
+            purchaseController.sendPurchasesToServer();
+            JOptionPane.showMessageDialog(null, "Totalerna är nu skickade till servern");
+        } catch (IOException ex) {
+
+            JOptionPane.showMessageDialog(null, "Kunde inte skicka till server");
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_sendToServerMenuItemActionPerformed
+
+    private void removeSoldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSoldItemActionPerformed
+        DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+        int selectedRowInt = salesTable.getSelectedRow();
+        int res = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort valda raden", "", JOptionPane.YES_NO_OPTION);
+        
+       // String code = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 0);
+        //int price = (int) salesTable.getValueAt(salesTable.getSelectedRow(), 1);
+        
+        if (res == JOptionPane.YES_OPTION) {
+            
+            model.removeRow(selectedRowInt);
+            System.out.println("after remove row:" + salesTable.getRowCount());
+            
+           model.getRowCount();
+         String code = "";
+         sale.resetSale();
+         System.out.println("length:" + sale.getListLength());
+         int price = 0;
+           for (int row = 0; row < salesTable.getRowCount(); row++){
+               code = (String) salesTable.getValueAt(row, 0);
+               price = (int) salesTable.getValueAt(row, 1);
+                try {
+                    System.out.println("add:" + code + ", price:" + price);
+                    processSaleController.addItem(price, code);
+                } catch (IOException ex) {
+                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+           }
+           updateGrandTotal();
+        }
+    }//GEN-LAST:event_removeSoldItemActionPerformed
+
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -513,15 +586,21 @@ public class SaleJFrame extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                new SaleJFrame().setVisible(true);
+                try {
+                    new SaleJFrame().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
+    private javax.swing.JMenu advancedMenu;
     private javax.swing.JButton deleteFile;
     public javax.swing.JLabel errorLabel;
+    private javax.swing.JMenuItem getSellersMenuItem;
     private javax.swing.JTextField grandTotalOutput;
     private javax.swing.JTextField itemIdInput;
     private javax.swing.JLabel jLabel1;
@@ -529,18 +608,19 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenu menu;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSaleButton;
-    private javax.swing.JButton populateSellersButton;
     private javax.swing.JTable purchaseTable;
     private javax.swing.JTextField quantityInput;
-    private javax.swing.JTable saleTable1;
-    private javax.swing.JButton sendToServer;
+    private javax.swing.JButton removeSoldItem;
+    private javax.swing.JTable salesTable;
+    private javax.swing.JMenuItem sendToServerMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }
