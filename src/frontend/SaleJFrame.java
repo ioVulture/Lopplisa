@@ -463,6 +463,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                                 model.addRow(row);
                             }
                             int rowToRemoveFromModel = getRowByValue(purchaseTableModel, key);
+                            grandTotalOutput.setText(total.toString());
                             purchaseTableModel.removeRow(rowToRemoveFromModel);
                             purchaseController.deletePurchase(key, total);
                             itemIdInput.requestFocus();
