@@ -184,14 +184,14 @@ public class SaleJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Kod", "Pris"
+                "Kod", "Pris"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -211,7 +211,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             saleTable1.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 167, 273, 320));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 167, 190, 320));
 
         sendToServer.setText("Skicka till server");
         sendToServer.addActionListener(new java.awt.event.ActionListener() {
