@@ -5,25 +5,32 @@ import classes.PurchaseController;
 import classes.Sale;
 import classes.SellersController;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class SaleJFrame extends javax.swing.JFrame {
 
     static ProcessSaleController processSaleController;
     static SellersController sellers = new SellersController();
     PurchaseController purchaseController = new PurchaseController();
-    
+
     public SaleJFrame() {
         initComponents();
         purchaseTable.removeColumn(purchaseTable.getColumnModel().getColumn(0));
@@ -72,6 +79,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loppis");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         newSaleButton.setText("Avsluta försäljning");
         newSaleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -80,10 +88,13 @@ public class SaleJFrame extends javax.swing.JFrame {
                 newSaleButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(newSaleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 573, -1, -1));
 
         jLabel1.setText("Kod");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 51, -1, -1));
 
         jLabel2.setText("Pris");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 80, -1, -1));
 
         itemIdInput.setToolTipText("Enter Item Id");
         itemIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
@@ -92,6 +103,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                 itemIdInputKeyPressed(evt);
             }
         });
+        getContentPane().add(itemIdInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 51, 99, -1));
 
         quantityInput.setToolTipText("Enter quantity of the item");
         quantityInput.setMaximumSize(new java.awt.Dimension(6, 20));
@@ -100,6 +112,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                 quantityInputKeyPressed(evt);
             }
         });
+        getContentPane().add(quantityInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 77, 99, -1));
 
         purchaseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,11 +140,18 @@ public class SaleJFrame extends javax.swing.JFrame {
         purchaseTable.setCellSelectionEnabled(true);
         purchaseTable.getTableHeader().setResizingAllowed(false);
         purchaseTable.getTableHeader().setReorderingAllowed(false);
+        purchaseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                purchaseTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(purchaseTable);
         purchaseTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (purchaseTable.getColumnModel().getColumnCount() > 0) {
             purchaseTable.getColumnModel().getColumn(1).setResizable(false);
         }
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 129, 317));
 
         addItemButton.setText("Lägg till");
         addItemButton.addActionListener(new java.awt.event.ActionListener() {
@@ -139,10 +159,14 @@ public class SaleJFrame extends javax.swing.JFrame {
                 addItemButtonActionPerformed(evt);
             }
         });
+        getContentPane().add(addItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 103, 99, -1));
 
         jLabel5.setText("Slutsumma");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 538, -1, -1));
+        getContentPane().add(grandTotalOutput, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 535, 99, -1));
 
         jLabel6.setText("Avslutade försäjningar");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
 
         populateSellersButton.setText("Hämta säljare");
         populateSellersButton.addActionListener(new java.awt.event.ActionListener() {
@@ -150,8 +174,10 @@ public class SaleJFrame extends javax.swing.JFrame {
                 populateSellersActionPerformed(evt);
             }
         });
+        getContentPane().add(populateSellersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 109, -1));
 
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        getContentPane().add(errorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 31, 137, 14));
 
         saleTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,7 +191,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -185,12 +211,15 @@ public class SaleJFrame extends javax.swing.JFrame {
             saleTable1.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 167, 273, 320));
+
         sendToServer.setText("Skicka till server");
         sendToServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendToServerActionPerformed(evt);
             }
         });
+        getContentPane().add(sendToServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, -1, -1));
 
         deleteFile.setText("Ta bort försäljning");
         deleteFile.setToolTipText("");
@@ -199,6 +228,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                 deleteFileActionPerformed(evt);
             }
         });
+        getContentPane().add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 129, -1));
 
         jMenu1.setText("File");
 
@@ -215,92 +245,6 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(newSaleButton)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel1))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(quantityInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(itemIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(grandTotalOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 436, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                        .addComponent(deleteFile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(sendToServer, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(populateSellersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(itemIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(quantityInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addItemButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(sendToServer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(populateSellersButton)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(80, 80, 80))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(deleteFile))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(grandTotalOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)))
-                .addComponent(newSaleButton)
-                .addGap(20, 20, 20))
-        );
-
         getAccessibleContext().setAccessibleParent(this);
 
         pack();
@@ -309,32 +253,27 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         String itemIdInputText = itemIdInput.getText();
         String quantityInputText = quantityInput.getText();
- 
+
         if (!itemIdInputText.isEmpty() && !quantityInputText.isEmpty()) {
-            
-         
+
             String code = itemIdInputText.toUpperCase();
             int price = Integer.parseInt(quantityInputText);
 
-                        
             try {
                 if (processSaleController.codeExist(code)) {
-                    
+
                     try {
-                        
+
                         processSaleController.addItem(price, code);
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {
                         Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                   
-                    
+
                     int grandTotal = processSaleController.getSale().getTotal();
                     grandTotalOutput.setText(String.valueOf(grandTotal));
-                    
-                    
+
                     Object[] row = {processSaleController.getSale().getListLength(), code, price};
                     DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
                     model.addRow(row);
@@ -355,23 +294,26 @@ public class SaleJFrame extends javax.swing.JFrame {
     public void setErrorLabelText(String msg) {
         errorLabel.setText(msg);
     }
-   
+
     public void getFilesNames() {
-       PurchaseController purchaseController = new PurchaseController();
-       TreeMap<Long, Integer> allPurchasesMap = purchaseController.getAllPurchasesMap();
+        PurchaseController purchaseController = new PurchaseController();
+        TreeMap<Long, Integer> allPurchasesMap = purchaseController.getAllPurchasesMap();
         DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
-       for (Entry entry : allPurchasesMap.entrySet()) {
+        for (Entry entry : allPurchasesMap.entrySet()) {
             Object[] row = {entry.getKey(), entry.getValue()};
+
             puchaseTableModel.addRow(row);
-       }
+
+        }
     }
+
     private boolean proceedWithSale() {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
         int res = JOptionPane.showConfirmDialog(null, "Att betala:" + total + "kr", "", JOptionPane.YES_NO_OPTION);
-       
-        if(res == JOptionPane.YES_OPTION) {
+
+        if (res == JOptionPane.YES_OPTION) {
             try {
                 processSaleController.makeNewSale(total, time);
             } catch (IOException ex) {
@@ -382,7 +324,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             quantityInput.setText("");
             itemIdInput.setText("");
             DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
-            Object[] row = {time,total};
+            Object[] row = {time, total};
             puchaseTableModel.addRow(row);
 
             DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
@@ -398,47 +340,49 @@ public class SaleJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_newSaleButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void populateSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateSellersActionPerformed
         try {
-            sellers.populateSellers();// TODO add your handling code here:
+            sellers.populateSellers();
         } catch (IOException ex) {
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_populateSellersActionPerformed
     private int getRowByValue(DefaultTableModel model, Object value) {
         for (int i = model.getRowCount() - 1; i >= 0; --i) {
-            //System.out.println("modelValue:" + model.getValueAt(i, 0));
+
             if (model.getValueAt(i, 0).equals(value)) {
-                    // what if value is not unique?
-                 return i;
+                // what if value is not unique?
+                return i;
             }
 
         }
         return -1;
     }
     private void deleteFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFileActionPerformed
-       PurchaseController purchaseController = new PurchaseController();
-       Long id = 1473761053007L;
-       Integer total = 106;
+        PurchaseController purchaseController = new PurchaseController();
+
+        int purchaseRowInt = purchaseTable.getSelectedRow();
         DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
-       int rowInt = getRowByValue(purchaseTableModel, id);
-       if (rowInt != -1) {
-        System.out.println("Delete row val:" + purchaseTableModel.getValueAt(rowInt, 0)); 
-       }
-        try {
-            boolean deletePurchase = purchaseController.deletePurchase(id, total);
-            if (deletePurchase) {
-               
-               purchaseTableModel.removeRow(rowInt);
-                
-                 
+        //int rowInt = getRowByValue(purchaseTableModel, id);
+        Long key = (Long) purchaseTableModel.getValueAt(purchaseRowInt, 0);
+        Integer total = (Integer) purchaseTableModel.getValueAt(purchaseRowInt, 1);
+        int res = JOptionPane.showConfirmDialog(null, "Är du säker på att du nollställa försäljningen?", "", JOptionPane.YES_NO_OPTION);
+
+        if (res == JOptionPane.YES_OPTION) {
+            try {
+                boolean deletePurchase = purchaseController.deletePurchase(key, total);
+                if (deletePurchase) {
+
+                    purchaseTableModel.removeRow(purchaseRowInt);
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteFileActionPerformed
 
@@ -447,14 +391,13 @@ public class SaleJFrame extends javax.swing.JFrame {
             Sale sale = new Sale();
             if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
                 proceedWithSale();
-                
-            
-            } else if ( evt.getKeyCode() == KeyEvent.VK_ENTER && sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
+
+            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
                 errorLabel.setText("");
                 if (!quantityInput.hasFocus()) {
                     quantityInput.requestFocus();
                 }
-            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && !sale.codeMatchSellers(itemIdInput.getText().toUpperCase())){
+            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER && !sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
                 errorLabel.setText("Säljarkoden finns inte");
             }
             /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
@@ -469,7 +412,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemIdInputKeyPressed
 
     private void quantityInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityInputKeyPressed
-     
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             addItemButton.requestFocus();
         }
@@ -483,9 +426,60 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sendToServerActionPerformed
 
+    private void purchaseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_purchaseTableMouseClicked
+        DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
+        if (evt.getClickCount() == 2) {
+            int res = JOptionPane.showConfirmDialog(null, "Din pågånde försäljning kommer rensas för att du ska kunna redigera", "", JOptionPane.YES_NO_OPTION);
+
+            if (res == JOptionPane.YES_OPTION) {
+
+                Integer total = (Integer) purchaseTable.getValueAt(purchaseTable.getSelectedRow(), 0);
+                Long key = (Long) purchaseTable.getModel().getValueAt(purchaseTable.getSelectedRow(), 0);
+                System.out.println("key was:" + key + "  Value:" + total);
+                String filePath = "purchases/" + total + "-" + key + "-purchases.txt";
+
+                Scanner scanner;
+                try {
+                    scanner = new Scanner(new File(filePath));
+                    System.out.println("scanner was:" + scanner.hasNext());
+                    if (scanner != null && scanner.hasNext()) {
+                        String text = scanner.next();
+
+                        ObjectMapper mapper = new ObjectMapper();
+                        JsonNode node = mapper.readValue(text, JsonNode.class);
+                        JsonNode brandNode = node.get("purchase");
+
+                        final JsonNode arrNode = new ObjectMapper().readTree(text).get("purchase");
+                        if (arrNode.isArray()) {
+                            DefaultTableModel model = (DefaultTableModel) saleTable1.getModel();
+                            while (model.getRowCount() > 0) {
+                                model.removeRow(0);
+                            }
+                            
+                            for (final JsonNode objNode : arrNode) {
+                                String code = objNode.get("code").getTextValue();
+                                Integer price = objNode.get("price").getIntValue();
+                                Object[] row = {code, price};
+                                model.addRow(row);
+                            }
+                            int rowToRemoveFromModel = getRowByValue(purchaseTableModel, key);
+                            purchaseTableModel.removeRow(rowToRemoveFromModel);
+                            purchaseController.deletePurchase(key, total);
+                            itemIdInput.requestFocus();
+                        }
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }  
+        }
+    }//GEN-LAST:event_purchaseTableMouseClicked
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -43,7 +43,7 @@ public class PurchaseController {
         long key = -1;
         Integer total = -1;
         for (File file : files) {
-            if (file.isFile()) {
+            if (file.isFile() && !file.getName().startsWith("0-")) {
 
                 results.add(file.getName());
                 fileNameList = file.getName().split("-");
@@ -56,9 +56,12 @@ public class PurchaseController {
 
         return resultMap;
     }
-
+    public boolean editPreviousPurchase(Long id, Integer total) {
+        
+        return false;
+    }
     public boolean deletePurchase(Long id, Integer total) throws IOException {
-
+        
         String fileName = total + "-" + id + "-purchases.txt";
         String deletedFileName = "0-" + id + "-purchases.txt";
 
@@ -68,7 +71,7 @@ public class PurchaseController {
         if (file.renameTo(deletedFile)) {
             System.out.println("File renamed");
         } else {
-            System.out.println("Sorry! the file can't be renamed");
+            System.out.println("Sorry! the file can't be renamed forid:" + id + " total:" + total);
         }
         return true;
     }
@@ -76,14 +79,11 @@ public class PurchaseController {
     public boolean sendPurchasesToServer() throws FileNotFoundException, IOException {
 
         Map<String, Integer> sellerTotals = getSellersTotals();
-                //System.out.println("c02 results:" + sellerTotals.get("C02"));
-        
+                
         StringBuilder sb = new StringBuilder();
         sb.append("sellerTotals=");
         for (Map.Entry sellerTotal : sellerTotals.entrySet()) {
             sb.append(sellerTotal.getKey() + ":" + sellerTotal.getValue() + ",");
-            
-            //System.out.println("code:" + sellerTotal.getKey() +  " ---- total:" + sellerTotal.getValue());
         }
        
         String urlString = propertiesHandler.getPropertyValue("remote.server.purchases.url") + propertiesHandler.getPropertyValue("remote.server.password");
@@ -91,8 +91,7 @@ public class PurchaseController {
         URL url = new URL(urlString);
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-       System.out.println("________" + sb.toString() + "___________ \n");
+      
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -104,9 +103,6 @@ public class PurchaseController {
         wr.close();
 
         int responseCode = con.getResponseCode();
-        //System.out.println("\nSending 'POST' request to URL : " + url);
-       
-        //System.out.println("data:" + sb.toString());
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -116,10 +112,6 @@ public class PurchaseController {
             response.append(inputLine);
         }
         in.close();
-
-        //print result
-        System.out.println(response.toString());
-
         return false;
     }
 
