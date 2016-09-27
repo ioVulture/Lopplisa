@@ -48,10 +48,6 @@ public class SaleJFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jMenu1 = new javax.swing.JMenu();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        deleteFile = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        purchaseTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         errorLabel = new javax.swing.JLabel();
         removeSoldItem = new javax.swing.JButton();
@@ -62,11 +58,13 @@ public class SaleJFrame extends javax.swing.JFrame {
         itemIdInput = new javax.swing.JTextField();
         quantityInput = new javax.swing.JTextField();
         addItemButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         newSaleButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         salesTotal = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        deleteFile = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        purchaseTable = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenu();
@@ -93,12 +91,185 @@ public class SaleJFrame extends javax.swing.JFrame {
         setTitle("Loppis");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1140, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
+        jPanel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        errorLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 51, 0));
+        errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        errorLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        removeSoldItem.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.highlight"));
+        removeSoldItem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        removeSoldItem.setText("Ta bort markerad");
+        removeSoldItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeSoldItemActionPerformed(evt);
+            }
+        });
+
+        salesTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        salesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kod", "Pris"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        salesTable.setCellSelectionEnabled(true);
+        salesTable.setGridColor(new java.awt.Color(204, 204, 204));
+        salesTable.getTableHeader().setResizingAllowed(false);
+        salesTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(salesTable);
+        salesTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (salesTable.getColumnModel().getColumnCount() > 0) {
+            salesTable.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("KOD");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setText("PRIS");
+
+        itemIdInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        itemIdInput.setToolTipText("C01-25, F26-50, H51-75, J76-100, M101-125 samt X-koder");
+        itemIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        itemIdInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                itemIdInputKeyPressed(evt);
+            }
+        });
+
+        quantityInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        quantityInput.setToolTipText("Endast pris under 1000 kronor. Högre pris måste delas upp i flera inmatningar!");
+        quantityInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        quantityInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                quantityInputKeyPressed(evt);
+            }
+        });
+
+        addItemButton.setBackground(java.awt.Color.white);
+        addItemButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        addItemButton.setForeground(new java.awt.Color(51, 51, 51));
+        addItemButton.setText("+");
+        addItemButton.setToolTipText("Kortkommando: Enter");
+        addItemButton.setAlignmentY(0.0F);
+        addItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addItemButtonActionPerformed(evt);
+            }
+        });
+
+        newSaleButton.setBackground(java.awt.Color.white);
+        newSaleButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        newSaleButton.setText("Avsluta försäljning");
+        newSaleButton.setToolTipText("Kortkommando: Space");
+        newSaleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        newSaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newSaleButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Totalt: ");
+
+        salesTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        salesTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        salesTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        salesTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(removeSoldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(40, 40, 40)
+                                        .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(172, 172, 172))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(itemIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(quantityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(addItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 98, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemIdInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantityInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(newSaleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(495, 495, 495))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(removeSoldItem)
+                            .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(39, 39, 39))))
+        );
+
+        jTabbedPane1.addTab("Nuvarande försäljning", jPanel1);
+
+        jPanel2.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        deleteFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        deleteFile.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         deleteFile.setText("Ta bort vald försäljning");
         deleteFile.setToolTipText("");
         deleteFile.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +277,9 @@ public class SaleJFrame extends javax.swing.JFrame {
                 deleteFileActionPerformed(evt);
             }
         });
-        jPanel2.add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 160, -1));
+        jPanel2.add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 180, -1));
 
-        purchaseTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        purchaseTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         purchaseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -146,130 +317,14 @@ public class SaleJFrame extends javax.swing.JFrame {
             purchaseTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 240, 370));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 240, 370));
 
         jTabbedPane1.addTab("Avsultade försäljningar", jPanel2);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        errorLabel.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(errorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 240, 20));
-
-        removeSoldItem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        removeSoldItem.setText("Ta bort vald vara");
-        removeSoldItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeSoldItemActionPerformed(evt);
-            }
-        });
-        jPanel1.add(removeSoldItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 480, 140, -1));
-
-        salesTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        salesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Kod", "Pris"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        salesTable.setCellSelectionEnabled(true);
-        salesTable.getTableHeader().setResizingAllowed(false);
-        salesTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(salesTable);
-        salesTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (salesTable.getColumnModel().getColumnCount() > 0) {
-            salesTable.getColumnModel().getColumn(1).setResizable(false);
-        }
-
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 270, 380));
-
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        jLabel1.setText("Kod");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 40, -1));
-
-        jLabel2.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        jLabel2.setText("Pris");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 30, -1));
-
-        itemIdInput.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        itemIdInput.setToolTipText("Enter Item Id");
-        itemIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
-        itemIdInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                itemIdInputKeyPressed(evt);
-            }
-        });
-        jPanel1.add(itemIdInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 100, -1));
-
-        quantityInput.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        quantityInput.setToolTipText("Enter quantity of the item");
-        quantityInput.setMaximumSize(new java.awt.Dimension(6, 20));
-        quantityInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                quantityInputKeyPressed(evt);
-            }
-        });
-        jPanel1.add(quantityInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 100, -1));
-
-        addItemButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        addItemButton.setText("Lägg till");
-        addItemButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addItemButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(addItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 130, -1));
-
-        jLabel5.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel5.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(180, 180, 180));
-        jLabel5.setText("Enter");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 30, 20));
-
-        newSaleButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        newSaleButton.setText("Avsluta försäljning");
-        newSaleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        newSaleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newSaleButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(newSaleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 130, -1));
-
-        jLabel10.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        jLabel10.setText("Totalt: ");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 50, -1));
-
-        jLabel9.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel9.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(180, 180, 180));
-        jLabel9.setText("Space");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 30, 20));
-
-        salesTotal.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        jPanel1.add(salesTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 50, 20));
-
-        jTabbedPane1.addTab("Nuvarande försäljning", jPanel1);
-
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 910, 650));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 670));
 
         menu.setText("File");
+        menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
 
         advancedMenu.setText("Avancerat");
 
@@ -344,7 +399,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                     quantityInput.setText("");
                     itemIdInput.setText("");
                 } else {
-                    errorLabel.setText("Koden finns inte");
+                    errorLabel.setText("Säljarkoden finns inte.");
                 }
                 if (!itemIdInput.hasFocus()) {
                     itemIdInput.requestFocus();
@@ -377,7 +432,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        int res = JOptionPane.showConfirmDialog(null, "Att betala:" + total + "kr", "", JOptionPane.YES_NO_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.YES_NO_OPTION);
 
         if (res == JOptionPane.YES_OPTION) {
             try {
@@ -543,11 +598,11 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void getSellersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getSellersMenuItemActionPerformed
         try {
             sellers.populateSellers();
-            JOptionPane.showMessageDialog(null, "Försäljarlistan är nu uppdaterad och nollställd");
+            JOptionPane.showMessageDialog(null, "Säljarlistan är uppdaterad och alla försäljningar nollställda");
 
         } catch (IOException ex) {
 
-            JOptionPane.showMessageDialog(null, "Kunde inte hämta försäljarlistan");
+            JOptionPane.showMessageDialog(null, "Kunde inte hämta säljarlistan");
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -557,7 +612,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void sendToServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendToServerMenuItemActionPerformed
         try {
             purchaseController.sendPurchasesToServer();
-            JOptionPane.showMessageDialog(null, "Totalerna är nu skickade till servern");
+            JOptionPane.showMessageDialog(null, "Totalerna är skickade till servern.");
         } catch (IOException ex) {
 
             JOptionPane.showMessageDialog(null, "Kunde inte skicka till server");
@@ -568,7 +623,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void removeSoldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSoldItemActionPerformed
         DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
         int selectedRowInt = salesTable.getSelectedRow();
-        int res = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort valda raden", "", JOptionPane.YES_NO_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort vald rad?", "", JOptionPane.YES_NO_OPTION);
         
        // String code = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 0);
         //int price = (int) salesTable.getValueAt(salesTable.getSelectedRow(), 1);
@@ -651,8 +706,6 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
