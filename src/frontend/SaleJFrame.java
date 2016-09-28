@@ -285,7 +285,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Totalt"
+                "Kod", "Totalt"
             }
         ) {
             Class[] types = new Class [] {
@@ -319,7 +319,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 240, 370));
 
-        jTabbedPane1.addTab("Avsultade försäljningar", jPanel2);
+        jTabbedPane1.addTab("Avslutade försäljningar", jPanel2);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 670));
 
