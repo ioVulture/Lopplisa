@@ -88,7 +88,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Loppis");
+        setTitle("Lopplisa v1.0");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
