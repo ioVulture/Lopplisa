@@ -74,6 +74,7 @@ public class SellersController {
         File dir = new File("purchases");
         Date date = new Date();
         File newName = new File("purchases-" + date.getTime());
+        
         if ( dir.isDirectory() ) {
                 dir.renameTo(newName);
                 dir.mkdir();

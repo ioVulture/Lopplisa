@@ -621,6 +621,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     private void getSellersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getSellersMenuItemActionPerformed
         try {
             sellers.populateSellers();
+            
             JOptionPane.showMessageDialog(null, "Säljarlistan är uppdaterad och alla försäljningar nollställda");
 
         } catch (IOException ex) {
@@ -628,19 +629,24 @@ public class SaleJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Kunde inte hämta säljarlistan");
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        DefaultTableModel model = (DefaultTableModel) purchaseTable.getModel();
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
 
     }//GEN-LAST:event_getSellersMenuItemActionPerformed
 
     private void sendToServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendToServerMenuItemActionPerformed
         try {
             purchaseController.sendPurchasesToServer();
+            
             JOptionPane.showMessageDialog(null, "Totalerna är skickade till servern.");
         } catch (IOException ex) {
 
             JOptionPane.showMessageDialog(null, "Kunde inte skicka till server");
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_sendToServerMenuItemActionPerformed
 
     private void removeSoldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSoldItemActionPerformed
