@@ -629,10 +629,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Kunde inte hämta säljarlistan");
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DefaultTableModel model = (DefaultTableModel) purchaseTable.getModel();
-        while (model.getRowCount() > 0) {
-            model.removeRow(0);
-        }
+        resetSystem();
 
     }//GEN-LAST:event_getSellersMenuItemActionPerformed
 
@@ -646,7 +643,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Kunde inte skicka till server");
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        resetSystem();
     }//GEN-LAST:event_sendToServerMenuItemActionPerformed
 
     private void removeSoldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSoldItemActionPerformed
@@ -723,7 +720,30 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    public void resetSystem() {
+        DefaultTableModel model = (DefaultTableModel) purchaseTable.getModel();
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+        DefaultTableModel model2 = (DefaultTableModel) salesTable.getModel();
+        while (model2.getRowCount() > 0) {
+            model2.removeRow(0);
+        }
+        File dir = new File("purchases");
+        Date date = new Date();
+        File newName = new File("purchases-" + date.getTime());
+        
+        if ( dir.isDirectory() ) {
+                dir.renameTo(newName);
+                dir.mkdir();
+        } else {
+                dir.mkdir();
+                dir.renameTo(newName);
+        }
+        priceInput.setText("");
+        codeIdInput.setText("");
+        errorLabel.setText("");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
     private javax.swing.JMenu advancedMenu;

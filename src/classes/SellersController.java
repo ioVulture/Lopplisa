@@ -71,17 +71,7 @@ public class SellersController {
                 new InputStreamReader(sellerUrl.openStream()));
         String sellerString = in.readLine();
         String[] sellerCodeList = sellerString.split(",");
-        File dir = new File("purchases");
-        Date date = new Date();
-        File newName = new File("purchases-" + date.getTime());
         
-        if ( dir.isDirectory() ) {
-                dir.renameTo(newName);
-                dir.mkdir();
-        } else {
-                dir.mkdir();
-                dir.renameTo(newName);
-        }
         try (FileWriter fw = new FileWriter("sellers.txt", false);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {
