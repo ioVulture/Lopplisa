@@ -21,7 +21,9 @@ public class ProcessSaleController {
         sale = new Sale();
    
        }
-
+    public void updateRow (Integer price, String code, Integer newPrice) {
+        sale.updateSoldItem(price, code, newPrice);
+    }
     public void makeNewSale(int total, long time) throws IOException {
  
         
@@ -45,7 +47,7 @@ public class ProcessSaleController {
             //exception handling left as an exercise for the reader
         }
 
-
+        
         
         sale.resetSale();
     }

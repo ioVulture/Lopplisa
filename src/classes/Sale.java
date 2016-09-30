@@ -30,7 +30,7 @@ public class Sale {
          }
          System.out.println("ContainsKey:" + sellersMap.containsKey(code));
          */
-        
+         System.out.println("addSoldItemCalled");
         if (codeMatchSellers(code.toUpperCase())) {
             sli.add(new SoldItem(price, code.toUpperCase()));
         } else {
@@ -41,17 +41,18 @@ public class Sale {
         }
     }
 
-    public void subtractSoldItem(int price, String code) {
+    public void updateSoldItem(int price, String code, Integer newPrice) {
         int i = 0;
+      //  System.out.println("price:" + price +"______code" + code);
         for (Iterator<SoldItem> it = sli.iterator(); it.hasNext();) {
 
             SoldItem sli1 = it.next();
-
+//.out.println(sli1.getCode() +"::::::::."+ sli1.getPrice());
             if (sli1.getCode().equalsIgnoreCase(code) && sli1.getPrice() == price) {
           
-                sli1.setPrice(0);
+                sli1.setPrice(newPrice);
                 sli.set(i, sli1);
- 
+                //System.out.println(sli1.getCode() +"::::::::."+ sli1.getPrice());
                 break;
             }
             i++;
@@ -78,14 +79,15 @@ public class Sale {
 
     public int getTotal() {
         double total = 0.0;
-        System.out.println("Size in grand total:" + sli.size());
+        
         for (Iterator<SoldItem> it = sli.iterator(); it.hasNext();) {
 
             SoldItem sli1 = it.next();
           
             total += sli1.getPrice();
-
+            //System.out.println("Ssli1.getPrice():" + sli1.getPrice());
         }
+        //System.out.println("total in grand total:" + total);
         return (int) Math.round(total);
     }
 

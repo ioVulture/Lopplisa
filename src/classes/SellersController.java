@@ -25,6 +25,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -52,7 +53,7 @@ public class SellersController {
                 for (final JsonNode objNode : arrNode) {
                     String code = objNode.get("code").getTextValue();
                     Integer total = objNode.get("total").getIntValue();
-                    sellerMap.put(code, total);
+                    sellerMap.put(code, 0);
                 }
             }
         }
@@ -65,11 +66,21 @@ public class SellersController {
         String passwordProperty = propertiesHandler.getPropertyValue("remote.server.password");
         String url = urlProperty + passwordProperty;
         URL sellerUrl = new URL(url);
+        
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(sellerUrl.openStream()));
         String sellerString = in.readLine();
         String[] sellerCodeList = sellerString.split(",");
-
+        File dir = new File("purchases");
+        Date date = new Date();
+        File newName = new File("purchases-" + date.getTime());
+        if ( dir.isDirectory() ) {
+                dir.renameTo(newName);
+                dir.mkdir();
+        } else {
+                dir.mkdir();
+                dir.renameTo(newName);
+        }
         try (FileWriter fw = new FileWriter("sellers.txt", false);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {

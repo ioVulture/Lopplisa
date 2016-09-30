@@ -47,16 +47,16 @@ public class SaleJFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenu1 = new javax.swing.JMenu();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        tabPane = new javax.swing.JTabbedPane();
+        currentSaleTab = new javax.swing.JPanel();
         errorLabel = new javax.swing.JLabel();
         removeSoldItem = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         salesTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        itemIdInput = new javax.swing.JTextField();
-        quantityInput = new javax.swing.JTextField();
+        codeIdInput = new javax.swing.JTextField();
+        priceInput = new javax.swing.JTextField();
         addItemButton = new javax.swing.JButton();
         newSaleButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -93,10 +93,10 @@ public class SaleJFrame extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tabPane.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
-        jPanel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        currentSaleTab.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
+        currentSaleTab.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         errorLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 51, 0));
@@ -153,21 +153,21 @@ public class SaleJFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("PRIS");
 
-        itemIdInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        itemIdInput.setToolTipText("C01-25, F26-50, H51-75, J76-100, M101-125 samt X-koder");
-        itemIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
-        itemIdInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        codeIdInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        codeIdInput.setToolTipText("C01-25, F26-50, H51-75, J76-100, M101-125 samt X-koder");
+        codeIdInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        codeIdInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                itemIdInputKeyPressed(evt);
+                codeIdInputKeyPressed(evt);
             }
         });
 
-        quantityInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        quantityInput.setToolTipText("Endast pris under 1000 kronor. Högre pris måste delas upp i flera inmatningar!");
-        quantityInput.setMaximumSize(new java.awt.Dimension(6, 20));
-        quantityInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        priceInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        priceInput.setToolTipText("Endast pris under 1000 kronor. Högre pris måste delas upp i flera inmatningar!");
+        priceInput.setMaximumSize(new java.awt.Dimension(6, 20));
+        priceInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                quantityInputKeyPressed(evt);
+                priceInputKeyPressed(evt);
             }
         });
 
@@ -202,55 +202,55 @@ public class SaleJFrame extends javax.swing.JFrame {
         salesTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         salesTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout currentSaleTabLayout = new javax.swing.GroupLayout(currentSaleTab);
+        currentSaleTab.setLayout(currentSaleTabLayout);
+        currentSaleTabLayout.setHorizontalGroup(
+            currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(currentSaleTabLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(currentSaleTabLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(currentSaleTabLayout.createSequentialGroup()
                                 .addComponent(removeSoldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(currentSaleTabLayout.createSequentialGroup()
                                         .addGap(40, 40, 40)
                                         .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(172, 373, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(currentSaleTabLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(currentSaleTabLayout.createSequentialGroup()
                                 .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(itemIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(currentSaleTabLayout.createSequentialGroup()
+                                .addComponent(codeIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(quantityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(priceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(addItemButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(22, 22, 22))))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        currentSaleTabLayout.setVerticalGroup(
+            currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(currentSaleTabLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemIdInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(codeIdInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(quantityInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(priceInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(newSaleButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,14 +258,14 @@ public class SaleJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(removeSoldItem)
                     .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addGap(39, 39, 39))
         );
 
-        jTabbedPane1.addTab("Nuvarande försäljning", jPanel1);
+        tabPane.addTab("Nuvarande försäljning", currentSaleTab);
 
         jPanel2.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -321,9 +321,9 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 240, 420));
 
-        jTabbedPane1.addTab("Avslutade försäljningar", jPanel2);
+        tabPane.addTab("Avslutade försäljningar", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 670));
+        getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 670));
 
         menu.setText("File");
         menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
@@ -372,9 +372,10 @@ public class SaleJFrame extends javax.swing.JFrame {
     public void setErrorLabelText(String msg) {
         errorLabel.setText(msg);
     }
+
     private void addItem() {
-        String itemIdInputText = itemIdInput.getText();
-        String quantityInputText = quantityInput.getText();
+        String itemIdInputText = codeIdInput.getText();
+        String quantityInputText = priceInput.getText();
 
         if (!itemIdInputText.isEmpty() && !quantityInputText.isEmpty()) {
 
@@ -382,10 +383,10 @@ public class SaleJFrame extends javax.swing.JFrame {
             int price = Integer.parseInt(quantityInputText);
 
             try {
-                if (processSaleController.codeExist(code)) {
+                if (processSaleController.codeExist(code) && price != 0) {
 
                     try {
-
+                        
                         processSaleController.addItem(price, code);
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -398,13 +399,13 @@ public class SaleJFrame extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
                     model.addRow(row);
                     errorLabel.setText("");
-                    quantityInput.setText("");
-                    itemIdInput.setText("");
+                    priceInput.setText("");
+                    codeIdInput.setText("");
                 } else {
                     errorLabel.setText("Säljarkoden finns inte.");
                 }
-                if (!itemIdInput.hasFocus()) {
-                    itemIdInput.requestFocus();
+                if (!codeIdInput.hasFocus()) {
+                    codeIdInput.requestFocus();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -414,6 +415,7 @@ public class SaleJFrame extends javax.swing.JFrame {
 
     public void updateGrandTotal() {
         int grandTotal = processSaleController.getSale().getTotal();
+        //System.out.println("grandtotal at the end:" + grandTotal);
         salesTotal.setText(String.valueOf(grandTotal));
 
     }
@@ -430,7 +432,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }
 
-    private boolean proceedWithSale() {
+    private boolean proceedWithSale() throws IOException {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
@@ -439,13 +441,16 @@ public class SaleJFrame extends javax.swing.JFrame {
         if (res == JOptionPane.OK_OPTION) {
             try {
                 processSaleController.makeNewSale(total, time);
+                
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                purchaseController.addPurchaseToTotals();
             }
 
             salesTotal.setText("");
-            quantityInput.setText("");
-            itemIdInput.setText("");
+            priceInput.setText("");
+            codeIdInput.setText("");
             DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
             Object[] row = {time, total};
             puchaseTableModel.addRow(row);
@@ -454,12 +459,16 @@ public class SaleJFrame extends javax.swing.JFrame {
             while (model.getRowCount() > 0) {
                 model.removeRow(0);
             }
-            itemIdInput.requestFocus();
+            codeIdInput.requestFocus();
         }
         return false;
     }
     private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
-        proceedWithSale();
+        try {
+            proceedWithSale();
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_newSaleButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -501,39 +510,46 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteFileActionPerformed
 
-    private void itemIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemIdInputKeyPressed
+    private void codeIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeIdInputKeyPressed
         try {
-            
+
             Sale sale = new Sale();
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE ) {
+            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
                 proceedWithSale();
-            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
+            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
                 errorLabel.setText("");
-                if (!quantityInput.hasFocus()) {
-                    quantityInput.requestFocus();
+                if (!priceInput.hasFocus()) {
+                    priceInput.requestFocus();
                 }
-            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && !sale.codeMatchSellers(itemIdInput.getText().toUpperCase())) {
+            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && !sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
                 errorLabel.setText("Säljarkoden finns inte");
             }
             /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
-             System.out.println("textLength:" + itemIdInput.getText().length());
-             System.out.println("keyCode:" + evt.getKeyCode());
-             System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
+             //System.out.println("textLength:" + itemIdInput.getText().length());
+             //System.out.println("keyCode:" + evt.getKeyCode());
+             //System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
              // errorLabel.setText("Säljarkoden finns inte");
              } */
         } catch (IOException ex) {
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_itemIdInputKeyPressed
+    }//GEN-LAST:event_codeIdInputKeyPressed
 
-    private void quantityInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityInputKeyPressed
-
-        if (evt.getKeyCode() == KeyEvent.VK_TAB) {
-            addItemButton.requestFocus();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            addItem();
-        }
-    }//GEN-LAST:event_quantityInputKeyPressed
+    private void priceInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceInputKeyPressed
+            if (priceInput.getText().length() > 3) { // limit to 3 characters
+                errorLabel.setText("Priset får max vara 999kr");
+               
+            } else if (priceInput.getText().contains("-")) {
+                errorLabel.setText("Priset får inte innahålla negativa nummer");
+            }
+            else if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+                addItemButton.requestFocus();
+            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                addItem();
+            }
+        
+        
+    }//GEN-LAST:event_priceInputKeyPressed
 
     private void purchaseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_purchaseTableMouseClicked
         DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
@@ -544,20 +560,20 @@ public class SaleJFrame extends javax.swing.JFrame {
 
                 Integer total = (Integer) purchaseTable.getValueAt(purchaseTable.getSelectedRow(), 0);
                 Long key = (Long) purchaseTable.getModel().getValueAt(purchaseTable.getSelectedRow(), 0);
-                
+
                 String filePath = "purchases/" + total + "-" + key + "-purchases.txt";
 
                 Scanner scanner;
                 try {
                     scanner = new Scanner(new File(filePath));
-                    System.out.println("scanner was:" + scanner.hasNext());
+                    //System.out.println("scanner was:" + scanner.hasNext());
                     if (scanner != null && scanner.hasNext()) {
                         String text = scanner.next();
 
                         ObjectMapper mapper = new ObjectMapper();
                         JsonNode node = mapper.readValue(text, JsonNode.class);
                         JsonNode brandNode = node.get("purchase");
-                        
+
                         final JsonNode arrNode = new ObjectMapper().readTree(text).get("purchase");
                         if (arrNode.isArray()) {
                             DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
@@ -578,13 +594,19 @@ public class SaleJFrame extends javax.swing.JFrame {
                                 } catch (IOException ex) {
                                     Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                                model.addRow(row);
+                                if (price != 0) {
+                                    model.addRow(row);
+                                }
                             }
                             int rowToRemoveFromModel = getRowByValue(purchaseTableModel, key);
                             salesTotal.setText(total.toString());
                             purchaseTableModel.removeRow(rowToRemoveFromModel);
+                          
+                            scanner.close();
+                            
                             purchaseController.deletePurchase(key, total);
-                            itemIdInput.requestFocus();
+                            tabPane.setSelectedIndex(0);
+                            codeIdInput.requestFocus();
                         }
                     }
                 } catch (FileNotFoundException ex) {
@@ -625,31 +647,30 @@ public class SaleJFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
         int selectedRowInt = salesTable.getSelectedRow();
         int res = JOptionPane.showConfirmDialog(null, "Är du säker på att du vill ta bort vald rad?", "", JOptionPane.YES_NO_OPTION);
-        
-       // String code = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 0);
+
+        // String code = (String) salesTable.getValueAt(salesTable.getSelectedRow(), 0);
         //int price = (int) salesTable.getValueAt(salesTable.getSelectedRow(), 1);
-        
         if (res == JOptionPane.YES_OPTION) {
-            
+
+            //model.setValueAt(0, selectedRowInt, 1);
+            //System.out.println("after remove row:" + salesTable.getRowCount());
+            String codeToRemove = (String) salesTable.getValueAt(selectedRowInt, 0);
+            Integer priceToRemove = (int) salesTable.getValueAt(selectedRowInt, 1);
+            processSaleController.updateRow(priceToRemove, codeToRemove, 0);
             model.removeRow(selectedRowInt);
-            System.out.println("after remove row:" + salesTable.getRowCount());
-            
-           model.getRowCount();
-         String code = "";
-         sale.resetSale();
-         System.out.println("length:" + sale.getListLength());
-         int price = 0;
-           for (int row = 0; row < salesTable.getRowCount(); row++){
-               code = (String) salesTable.getValueAt(row, 0);
-               price = (int) salesTable.getValueAt(row, 1);
-                try {
-                    System.out.println("add:" + code + ", price:" + price);
-                    processSaleController.addItem(price, code);
-                } catch (IOException ex) {
-                    Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-           }
-           updateGrandTotal();
+            model.fireTableRowsDeleted(selectedRowInt, selectedRowInt);
+            model.getRowCount();
+            String code = "";
+            sale.resetSale();
+            ////System.out.println("length:" + sale.getListLength());
+            int price = 0;
+            for (int row = 0; row < salesTable.getRowCount(); row++) {
+                code = (String) salesTable.getValueAt(row, 0);
+                price = (int) salesTable.getValueAt(row, 1);
+                //System.out.println("add:" + code + ", price:" + price);
+
+            }
+            updateGrandTotal();
         }
     }//GEN-LAST:event_removeSoldItemActionPerformed
 
@@ -700,31 +721,31 @@ public class SaleJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
     private javax.swing.JMenu advancedMenu;
+    private javax.swing.JTextField codeIdInput;
+    private javax.swing.JPanel currentSaleTab;
     private javax.swing.JButton deleteFile;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JMenuItem getSellersMenuItem;
-    private javax.swing.JTextField itemIdInput;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenu menu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSaleButton;
+    private javax.swing.JTextField priceInput;
     private javax.swing.JTable purchaseTable;
-    private javax.swing.JTextField quantityInput;
     private javax.swing.JButton removeSoldItem;
     private javax.swing.JTable salesTable;
     private javax.swing.JLabel salesTotal;
     private javax.swing.JMenuItem sendToServerMenuItem;
+    private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 
 }
