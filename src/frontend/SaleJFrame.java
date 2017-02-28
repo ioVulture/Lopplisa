@@ -6,11 +6,13 @@ import classes.Sale;
 import classes.SellersController;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,6 +40,21 @@ public class SaleJFrame extends javax.swing.JFrame {
         initComponents();
         purchaseTable.removeColumn(purchaseTable.getColumnModel().getColumn(0));
         getFilesNames();
+      
+        BufferedReader br = new BufferedReader(new FileReader("notes.txt"));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            notesTextArea.setText(sb.toString());
+        } finally {
+            br.close();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +78,12 @@ public class SaleJFrame extends javax.swing.JFrame {
         newSaleButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         salesTotal = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        notesTextArea = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        saveNotes = new javax.swing.JButton();
+        lastThreePurchases = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         deleteFile = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -136,7 +159,6 @@ public class SaleJFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        salesTable.setCellSelectionEnabled(true);
         salesTable.setGridColor(new java.awt.Color(204, 204, 204));
         salesTable.setRowHeight(25);
         salesTable.getTableHeader().setResizingAllowed(false);
@@ -202,6 +224,22 @@ public class SaleJFrame extends javax.swing.JFrame {
         salesTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         salesTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
+        notesTextArea.setColumns(20);
+        notesTextArea.setRows(5);
+        jScrollPane2.setViewportView(notesTextArea);
+
+        jLabel3.setText("Noteringar");
+        jLabel3.setToolTipText("");
+
+        saveNotes.setText("Spara");
+        saveNotes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveNotesActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Senaste försäljningar");
+
         javax.swing.GroupLayout currentSaleTabLayout = new javax.swing.GroupLayout(currentSaleTab);
         currentSaleTab.setLayout(currentSaleTabLayout);
         currentSaleTabLayout.setHorizontalGroup(
@@ -212,7 +250,18 @@ public class SaleJFrame extends javax.swing.JFrame {
                     .addGroup(currentSaleTabLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(currentSaleTabLayout.createSequentialGroup()
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58)
+                                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2)
+                                    .addGroup(currentSaleTabLayout.createSequentialGroup()
+                                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(saveNotes)
+                                            .addComponent(lastThreePurchases, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(currentSaleTabLayout.createSequentialGroup()
                                 .addComponent(removeSoldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
@@ -221,7 +270,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                                         .addGap(40, 40, 40)
                                         .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(172, 373, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(currentSaleTabLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -237,7 +286,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                                 .addComponent(priceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(addItemButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                                 .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(22, 22, 22))))))
         );
@@ -253,10 +302,23 @@ public class SaleJFrame extends javax.swing.JFrame {
                         .addComponent(priceInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(newSaleButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(currentSaleTabLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(currentSaleTabLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveNotes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(lastThreePurchases)))
                 .addGap(20, 20, 20)
                 .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(removeSoldItem)
@@ -454,7 +516,23 @@ public class SaleJFrame extends javax.swing.JFrame {
             DefaultTableModel puchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
             Object[] row = {time, total};
             puchaseTableModel.addRow(row);
-
+            
+            int rowCount = puchaseTableModel.getRowCount();
+            if (rowCount > 3) {
+                rowCount = 3;
+            }   
+            int i=0;
+            String latestThree = "";
+            while (i < rowCount) {
+                latestThree += puchaseTableModel.getValueAt(i, 1) + " kr";
+                i++;
+                if (i != 3) {
+                  latestThree+= ", ";
+                }
+                  
+            }
+            lastThreePurchases.setText(latestThree);
+            
             DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
             while (model.getRowCount() > 0) {
                 model.removeRow(0);
@@ -463,6 +541,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
         return false;
     }
+    
     private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
         try {
             proceedWithSale();
@@ -677,6 +756,18 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeSoldItemActionPerformed
 
+    private void saveNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveNotesActionPerformed
+        try(FileWriter fw = new FileWriter("notes.txt", false);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw))
+        {
+            out.print(notesTextArea.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                   
+    }//GEN-LAST:event_saveNotesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -755,21 +846,27 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lastThreePurchases;
     private javax.swing.JMenu menu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSaleButton;
+    private javax.swing.JTextArea notesTextArea;
     private javax.swing.JTextField priceInput;
     private javax.swing.JTable purchaseTable;
     private javax.swing.JButton removeSoldItem;
     private javax.swing.JTable salesTable;
     private javax.swing.JLabel salesTotal;
+    private javax.swing.JButton saveNotes;
     private javax.swing.JMenuItem sendToServerMenuItem;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
