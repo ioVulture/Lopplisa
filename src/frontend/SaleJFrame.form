@@ -44,7 +44,7 @@
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="advancedMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Avancerat"/>
+                <Property name="text" type="java.lang.String" value=" "/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="sendToServerMenuItem">
@@ -242,7 +242,7 @@
                               <Component id="saveNotes" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               <Component id="lastThreePurchases" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -464,7 +464,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Senaste f&#xf6;rs&#xe4;ljningar"/>
+                <Property name="text" type="java.lang.String" value="Senast avslutade f&#xf6;rs&#xe4;ljningar"/>
               </Properties>
             </Component>
           </SubComponents>

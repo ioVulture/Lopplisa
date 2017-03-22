@@ -238,7 +238,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Senaste försäljningar");
+        jLabel4.setText("Senast avslutade försäljningar");
 
         javax.swing.GroupLayout currentSaleTabLayout = new javax.swing.GroupLayout(currentSaleTab);
         currentSaleTab.setLayout(currentSaleTabLayout);
@@ -317,7 +317,7 @@ public class SaleJFrame extends javax.swing.JFrame {
                         .addComponent(saveNotes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
+                        .addGap(60, 60, 60)
                         .addComponent(lastThreePurchases)))
                 .addGap(20, 20, 20)
                 .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,7 +390,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         menu.setText("File");
         menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
 
-        advancedMenu.setText("Avancerat");
+        advancedMenu.setText(" ");
 
         sendToServerMenuItem.setText("Skicka totaler till server");
         sendToServerMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -523,14 +523,19 @@ public class SaleJFrame extends javax.swing.JFrame {
             }   
             int i=0;
             String latestThree = "";
+            Integer listSize = puchaseTableModel.getRowCount();
+            latestThree = "<html>";
             while (i < rowCount) {
-                latestThree += puchaseTableModel.getValueAt(i, 1) + " kr";
+                listSize = listSize - i;
+                
+                latestThree += "Nr " + listSize + ": " + puchaseTableModel.getValueAt(i, 1) + " kr";
                 i++;
                 if (i != 3) {
-                  latestThree+= ", ";
+                  latestThree+= "<br> ";
                 }
                   
             }
+            latestThree += "</html>";
             lastThreePurchases.setText(latestThree);
             
             DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
@@ -603,12 +608,6 @@ public class SaleJFrame extends javax.swing.JFrame {
             } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && !sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
                 errorLabel.setText("Säljarkoden finns inte");
             }
-            /*else if (itemIdInput.getText().length() > 2 || evt.getKeyCode() == 10) {
-             //System.out.println("textLength:" + itemIdInput.getText().length());
-             //System.out.println("keyCode:" + evt.getKeyCode());
-             //System.out.println("codeMatch:" + sale.codeMatchSellers(itemIdInput.getText()));
-             // errorLabel.setText("Säljarkoden finns inte");
-             } */
         } catch (IOException ex) {
             Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
