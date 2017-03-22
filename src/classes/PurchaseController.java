@@ -149,9 +149,7 @@ public class PurchaseController {
                         sellersMap.remove(code);
 
                         currentTotal = currentTotal + total;
-                        System.out.println("code:" + code);
-                        System.out.println("cuurentprice:" + currentTotal);
-                        System.out.println("price:" + currentTotal);
+          
                         sellersMap.put(code, currentTotal);
 
                     }

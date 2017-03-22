@@ -25,6 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -348,14 +350,14 @@ public class SaleJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Kod", "Totalt"
+                "Id", "Kod", "Totalt", "Betalningstyp"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -381,7 +383,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             purchaseTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 240, 420));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 320, 420));
 
         tabPane.addTab("Avslutade försäljningar", jPanel2);
 
@@ -459,6 +461,8 @@ public class SaleJFrame extends javax.swing.JFrame {
                     updateGrandTotal();
                     Object[] row = {code, price};
                     DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+                    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<> (model);
+                                        
                     model.addRow(row);
                     errorLabel.setText("");
                     priceInput.setText("");
@@ -498,11 +502,15 @@ public class SaleJFrame extends javax.swing.JFrame {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
-
-        if (res == JOptionPane.OK_OPTION) {
+        int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr Betalar med Swish", "", JOptionPane.YES_NO_CANCEL_OPTION);
+           
+        if (res == JOptionPane.YES_OPTION || res == JOptionPane.NO_OPTION) {
             try {
-                processSaleController.makeNewSale(total, time);
+                String purchaseType = "Kontant"; 
+                if (res == JOptionPane.YES_OPTION) {
+                       purchaseType = "Swish";
+                } 
+                processSaleController.makeNewSale(total, time, purchaseType);
                 
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);

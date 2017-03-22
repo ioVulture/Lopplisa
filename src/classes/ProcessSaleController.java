@@ -24,9 +24,9 @@ public class ProcessSaleController {
     public void updateRow (Integer price, String code, Integer newPrice) {
         sale.updateSoldItem(price, code, newPrice);
     }
-    public void makeNewSale(int total, long time) throws IOException {
+    public void makeNewSale(int total, long time, String purchaseType) throws IOException {
  
-        
+    
         String fileName =  total + "-" + time + "-purchases.txt";
         try(FileWriter fw = new FileWriter("purchases/" + fileName, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -42,7 +42,7 @@ public class ProcessSaleController {
                 out.print("{\"code\":\"" + soldItem.getCode() + "\",\"price\":" + soldItem.getPrice() + "}");
                 i++;
             }
-            out.print("]}");
+            out.print("]} , {\"purchaseType\":\"" + purchaseType + "\"}");
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
         }
