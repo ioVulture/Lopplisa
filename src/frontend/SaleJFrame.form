@@ -152,7 +152,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="emptyCurrentSale" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane4" alignment="0" min="-2" pref="270" max="-2" attributes="0"/>
@@ -208,7 +208,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="removeSoldItem" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="emptyCurrentSale" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="salesTotal" linkSize="9" alignment="1" max="32767" attributes="0"/>
                           <Component id="newSaleButton" linkSize="7" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -368,7 +368,7 @@
                 <Property name="text" type="java.lang.String" value="Avsluta f&#xf6;rs&#xe4;ljning"/>
                 <Property name="toolTipText" type="java.lang.String" value="Kortkommando: Space"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Standardmark&#xf6;r"/>
+                  <Color id="Default Cursor"/>
                 </Property>
               </Properties>
               <Events>
@@ -394,7 +394,7 @@
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="emptyCurrentSale">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="33" red="cc" type="rgb"/>
@@ -404,6 +404,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Rensa f&#xf6;rs&#xe4;ljning"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emptyCurrentSaleActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

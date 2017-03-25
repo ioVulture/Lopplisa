@@ -79,7 +79,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         newSaleButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         salesTotal = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        emptyCurrentSale = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         deleteFile = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -229,9 +229,14 @@ public class SaleJFrame extends javax.swing.JFrame {
         salesTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         salesTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jButton1.setBackground(new java.awt.Color(204, 51, 0));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jButton1.setText("Rensa försäljning");
+        emptyCurrentSale.setBackground(new java.awt.Color(204, 51, 0));
+        emptyCurrentSale.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        emptyCurrentSale.setText("Rensa försäljning");
+        emptyCurrentSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emptyCurrentSaleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout currentSaleTabLayout = new javax.swing.GroupLayout(currentSaleTab);
         currentSaleTab.setLayout(currentSaleTabLayout);
@@ -239,7 +244,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentSaleTabLayout.createSequentialGroup()
                 .addGap(68, 68, 68)
-                .addComponent(jButton1)
+                .addComponent(emptyCurrentSale)
                 .addGap(18, 18, 18)
                 .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,14 +290,14 @@ public class SaleJFrame extends javax.swing.JFrame {
                 .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(removeSoldItem)
-                        .addComponent(jButton1))
+                        .addComponent(emptyCurrentSale))
                     .addComponent(salesTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(newSaleButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        currentSaleTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addItemButton, codeIdInput, jButton1, newSaleButton, priceInput, removeSoldItem});
+        currentSaleTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addItemButton, codeIdInput, emptyCurrentSale, newSaleButton, priceInput, removeSoldItem});
 
         currentSaleTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, salesTotal});
 
@@ -772,6 +777,22 @@ public class SaleJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeSoldItemActionPerformed
 
+    private void emptyCurrentSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emptyCurrentSaleActionPerformed
+       int res = JOptionPane.showConfirmDialog(null, "Vill du rensa pågående försäljning?", "", JOptionPane.YES_NO_OPTION);
+
+            if (res == JOptionPane.YES_OPTION) {
+                
+                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+                while (model.getRowCount() > 0) {
+                    model.removeRow(0);
+                }
+                sale.resetSale();
+                salesTotal.setText("");
+                updateGrandTotal();
+                
+            } 
+    }//GEN-LAST:event_emptyCurrentSaleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -845,9 +866,9 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField codeIdInput;
     private javax.swing.JPanel currentSaleTab;
     private javax.swing.JButton deleteFile;
+    private javax.swing.JButton emptyCurrentSale;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JMenuItem getSellersMenuItem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
