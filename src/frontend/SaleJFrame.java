@@ -78,16 +78,19 @@ public class SaleJFrame extends javax.swing.JFrame {
         newSaleButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         salesTotal = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        notesTextArea = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        saveNotes = new javax.swing.JButton();
-        lastThreePurchases = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         deleteFile = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         purchaseTable = new javax.swing.JTable();
+        saveNotes = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        notesTextArea = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lastThreePurchases = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenu();
@@ -126,8 +129,8 @@ public class SaleJFrame extends javax.swing.JFrame {
         errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         errorLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        removeSoldItem.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.highlight"));
-        removeSoldItem.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        removeSoldItem.setBackground(new java.awt.Color(204, 0, 0));
+        removeSoldItem.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         removeSoldItem.setText("Ta bort markerad");
         removeSoldItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,8 +196,8 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         });
 
-        addItemButton.setBackground(java.awt.Color.white);
-        addItemButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        addItemButton.setBackground(new java.awt.Color(51, 204, 0));
+        addItemButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addItemButton.setForeground(new java.awt.Color(51, 51, 51));
         addItemButton.setText("Lägg till");
         addItemButton.setToolTipText("Kortkommando: Enter");
@@ -205,8 +208,8 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         });
 
-        newSaleButton.setBackground(java.awt.Color.white);
-        newSaleButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        newSaleButton.setBackground(new java.awt.Color(51, 204, 0));
+        newSaleButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         newSaleButton.setText("Avsluta försäljning");
         newSaleButton.setToolTipText("Kortkommando: Space");
         newSaleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -217,130 +220,97 @@ public class SaleJFrame extends javax.swing.JFrame {
         });
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Totalt: ");
 
-        salesTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        salesTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        salesTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        salesTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         salesTotal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         salesTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        notesTextArea.setColumns(20);
-        notesTextArea.setRows(5);
-        jScrollPane2.setViewportView(notesTextArea);
-
-        jLabel3.setText("Noteringar");
-        jLabel3.setToolTipText("");
-
-        saveNotes.setText("Spara");
-        saveNotes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveNotesActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Senast avslutade försäljningar");
+        jButton1.setBackground(new java.awt.Color(204, 51, 0));
+        jButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButton1.setText("Rensa försäljning");
 
         javax.swing.GroupLayout currentSaleTabLayout = new javax.swing.GroupLayout(currentSaleTab);
         currentSaleTab.setLayout(currentSaleTabLayout);
         currentSaleTabLayout.setHorizontalGroup(
             currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentSaleTabLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(68, 68, 68)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
                 .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2)
-                                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(saveNotes)
-                                            .addComponent(lastThreePurchases, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                .addComponent(removeSoldItem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                        .addGap(40, 40, 40)
-                                        .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())
-                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(currentSaleTabLayout.createSequentialGroup()
-                                .addComponent(codeIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
+                    .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(currentSaleTabLayout.createSequentialGroup()
+                            .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(codeIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(priceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(addItemButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                                .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))))))
+                                .addComponent(priceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(14, 14, 14)
+                            .addComponent(addItemButton))
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(currentSaleTabLayout.createSequentialGroup()
+                        .addComponent(removeSoldItem)
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 55, Short.MAX_VALUE))
         );
         currentSaleTabLayout.setVerticalGroup(
             currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentSaleTabLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(13, 13, 13)
+                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codeIdInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(priceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addItemButton))
+                    .addComponent(codeIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(priceInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(newSaleButton))
-                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(currentSaleTabLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveNotes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(60, 60, 60)
-                        .addComponent(lastThreePurchases)))
-                .addGap(20, 20, 20)
-                .addGroup(currentSaleTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(removeSoldItem)
-                    .addComponent(salesTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(39, 39, 39))
+                        .addComponent(removeSoldItem)
+                        .addComponent(jButton1))
+                    .addComponent(salesTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newSaleButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        currentSaleTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addItemButton, codeIdInput, jButton1, newSaleButton, priceInput, removeSoldItem});
+
+        currentSaleTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, salesTotal});
 
         tabPane.addTab("Nuvarande försäljning", currentSaleTab);
 
         jPanel2.setBackground(javax.swing.UIManager.getDefaults().getColor("TabbedPane.highlight"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        deleteFile.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        deleteFile.setText("Ta bort vald försäljning");
+        deleteFile.setBackground(new java.awt.Color(204, 0, 0));
+        deleteFile.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        deleteFile.setText("Ta bort markerad");
         deleteFile.setToolTipText("");
         deleteFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteFileActionPerformed(evt);
             }
         });
-        jPanel2.add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 180, -1));
+        jPanel2.add(deleteFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, -1, -1));
 
         purchaseTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         purchaseTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -381,11 +351,45 @@ public class SaleJFrame extends javax.swing.JFrame {
             purchaseTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 240, 420));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 240, 420));
 
         tabPane.addTab("Avslutade försäljningar", jPanel2);
 
-        getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 670));
+        getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 710, 580));
+
+        saveNotes.setBackground(new java.awt.Color(51, 204, 0));
+        saveNotes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        saveNotes.setText("Spara");
+        saveNotes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveNotesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(saveNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 360, 70, -1));
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel3.setText("Kom ihåg!");
+        jLabel3.setToolTipText("");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 40, -1, -1));
+
+        notesTextArea.setBackground(new java.awt.Color(241, 241, 241));
+        notesTextArea.setColumns(18);
+        notesTextArea.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        notesTextArea.setForeground(new java.awt.Color(51, 51, 51));
+        notesTextArea.setRows(15);
+        notesTextArea.setMargin(new java.awt.Insets(10, 10, 10, 10));
+        jScrollPane2.setViewportView(notesTextArea);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 230, 290));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel4.setText("Senast avslutade försäljningar");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 300, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 640, -1, -1));
+
+        lastThreePurchases.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        getContentPane().add(lastThreePurchases, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 450, 180, -1));
 
         menu.setText("File");
         menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
@@ -427,10 +431,6 @@ public class SaleJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
-        addItem();
-    }//GEN-LAST:event_addItemButtonActionPerformed
     public void setErrorLabelText(String msg) {
         errorLabel.setText(msg);
     }
@@ -547,14 +547,6 @@ public class SaleJFrame extends javax.swing.JFrame {
         return false;
     }
     
-    private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
-        try {
-            proceedWithSale();
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_newSaleButtonActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         System.exit(0);
@@ -593,41 +585,6 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_deleteFileActionPerformed
-
-    private void codeIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeIdInputKeyPressed
-        try {
-
-            Sale sale = new Sale();
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-                proceedWithSale();
-            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
-                errorLabel.setText("");
-                if (!priceInput.hasFocus()) {
-                    priceInput.requestFocus();
-                }
-            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && !sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
-                errorLabel.setText("Säljarkoden finns inte");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_codeIdInputKeyPressed
-
-    private void priceInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceInputKeyPressed
-            if (priceInput.getText().length() > 3) { // limit to 3 characters
-                errorLabel.setText("Priset får max vara 999kr");
-               
-            } else if (priceInput.getText().contains("-")) {
-                errorLabel.setText("Priset får inte innahålla negativa nummer");
-            }
-            else if (evt.getKeyCode() == KeyEvent.VK_TAB) {
-                addItemButton.requestFocus();
-            } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                addItem();
-            }
-        
-        
-    }//GEN-LAST:event_priceInputKeyPressed
 
     private void purchaseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_purchaseTableMouseClicked
         DefaultTableModel purchaseTableModel = (DefaultTableModel) purchaseTable.getModel();
@@ -724,6 +681,63 @@ public class SaleJFrame extends javax.swing.JFrame {
         resetSystem();
     }//GEN-LAST:event_sendToServerMenuItemActionPerformed
 
+    private void saveNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveNotesActionPerformed
+        try(FileWriter fw = new FileWriter("notes.txt", false);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.print(notesTextArea.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_saveNotesActionPerformed
+
+    private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
+        try {
+            proceedWithSale();
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_newSaleButtonActionPerformed
+
+    private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
+        addItem();
+    }//GEN-LAST:event_addItemButtonActionPerformed
+
+    private void priceInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceInputKeyPressed
+        if (priceInput.getText().length() > 3) { // limit to 3 characters
+            errorLabel.setText("Priset får max vara 999kr");
+
+        } else if (priceInput.getText().contains("-")) {
+            errorLabel.setText("Priset får inte innahålla negativa nummer");
+        }
+        else if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+            addItemButton.requestFocus();
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            addItem();
+        }
+    }//GEN-LAST:event_priceInputKeyPressed
+
+    private void codeIdInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeIdInputKeyPressed
+        try {
+
+            Sale sale = new Sale();
+            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+                proceedWithSale();
+            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
+                errorLabel.setText("");
+                if (!priceInput.hasFocus()) {
+                    priceInput.requestFocus();
+                }
+            } else if ((evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) && !sale.codeMatchSellers(codeIdInput.getText().toUpperCase())) {
+                errorLabel.setText("Säljarkoden finns inte");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_codeIdInputKeyPressed
+
     private void removeSoldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSoldItemActionPerformed
         DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
         int selectedRowInt = salesTable.getSelectedRow();
@@ -754,18 +768,6 @@ public class SaleJFrame extends javax.swing.JFrame {
             updateGrandTotal();
         }
     }//GEN-LAST:event_removeSoldItemActionPerformed
-
-    private void saveNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveNotesActionPerformed
-        try(FileWriter fw = new FileWriter("notes.txt", false);
-        BufferedWriter bw = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bw))
-        {
-            out.print(notesTextArea.getText());
-        } catch (IOException ex) {
-            Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                   
-    }//GEN-LAST:event_saveNotesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -842,11 +844,14 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteFile;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JMenuItem getSellersMenuItem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
