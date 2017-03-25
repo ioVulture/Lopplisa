@@ -26,7 +26,7 @@ public class ProcessSaleController {
     }
     public void makeNewSale(int total, long time) throws IOException {
  
-        
+    
         String fileName =  total + "-" + time + "-purchases.txt";
         try(FileWriter fw = new FileWriter("purchases/" + fileName, true);
         BufferedWriter bw = new BufferedWriter(fw);
