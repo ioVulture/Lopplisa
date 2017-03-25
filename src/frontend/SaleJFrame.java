@@ -461,6 +461,8 @@ public class SaleJFrame extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
                                         
                     model.addRow(row);
+                    salesTable.scrollRectToVisible(salesTable.getCellRect(model.getRowCount()-1,0, true));
+
                     errorLabel.setText("");
                     priceInput.setText("");
                     codeIdInput.setText("");
@@ -491,7 +493,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             Object[] row = {entry.getKey(), entry.getValue()};
 
             puchaseTableModel.addRow(row);
-
+            purchaseTable.scrollRectToVisible(purchaseTable.getCellRect(puchaseTableModel.getRowCount()-1,0, true));
         }
     }
 
