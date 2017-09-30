@@ -84,6 +84,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         deleteFile = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         purchaseTable = new javax.swing.JTable();
+        settings = new javax.swing.JTabbedPane();
         saveNotes = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -360,6 +361,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 240, 420));
 
         tabPane.addTab("Avslutade försäljningar", jPanel2);
+        tabPane.addTab("tab3", settings);
 
         getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 710, 580));
 
@@ -397,7 +399,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         lastThreePurchases.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         getContentPane().add(lastThreePurchases, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 440, 180, 70));
 
-        swishPerson.setText("swishperson");
+        swishPerson.setText("Swish");
         getContentPane().add(swishPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 190, -1));
 
         menu.setText("File");
@@ -511,7 +513,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         Date date = new Date();
         long time = date.getTime();
         //int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
-        String[] buttons = { "Swish", "Kon-tanter", "Avbryt" };
+        String[] buttons = { "Swish", "Kontant", "Avbryt" };
         int res = JOptionPane.showOptionDialog(null, "Att betala: " + total + " kr", "Att betala",
         JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[2]);
      
@@ -909,6 +911,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel salesTotal;
     private javax.swing.JButton saveNotes;
     private javax.swing.JMenuItem sendToServerMenuItem;
+    private javax.swing.JTabbedPane settings;
     private javax.swing.JTextField swishPerson;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
