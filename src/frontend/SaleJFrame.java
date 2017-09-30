@@ -89,11 +89,9 @@ public class SaleJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         notesTextArea = new javax.swing.JTextArea();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lastThreePurchases = new javax.swing.JLabel();
-        swishPerson = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenu();
@@ -361,7 +359,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 240, 420));
 
         tabPane.addTab("Avslutade försäljningar", jPanel2);
-        tabPane.addTab("tab3", settings);
+        tabPane.addTab("Inställningar", settings);
 
         getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 710, 580));
 
@@ -389,18 +387,11 @@ public class SaleJFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(notesTextArea);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 230, 290));
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel4.setText("Senast avslutade försäljningar");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, -1, -1));
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 300, -1, -1));
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 640, -1, -1));
 
         lastThreePurchases.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         getContentPane().add(lastThreePurchases, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 440, 180, 70));
-
-        swishPerson.setText("Swish");
-        getContentPane().add(swishPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 190, -1));
 
         menu.setText("File");
         menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
@@ -512,13 +503,13 @@ public class SaleJFrame extends javax.swing.JFrame {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        //int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
         String[] buttons = { "Swish", "Kontant", "Avbryt" };
-        int res = JOptionPane.showOptionDialog(null, "Att betala: " + total + " kr", "Att betala",
-        JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[2]);
+        //int res = JOptionPane.showOptionDialog(null, "Att betala: " + total + " kr", "Att betala",
+        //JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[2]);
      
         
-        if (res == 0 || res == 1) {
+        if (res == JOptionPane.OK_OPTION) {
             try {
                 if(res == 0) {
                     processSaleController.makeNewSale(total, time, "swish");
@@ -547,6 +538,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             String latestThree = "";
             Integer listSize = puchaseTableModel.getRowCount();
             latestThree = "<html>";
+            /*
             while (i < rowCount) {
                 listSize = listSize - i;
                 
@@ -556,6 +548,9 @@ public class SaleJFrame extends javax.swing.JFrame {
                   latestThree+= "<br> ";
                 }
                   
+            }*/
+            if (puchaseTableModel.getRowCount() > 0) {
+                latestThree += "Föregående försäljning:" + puchaseTableModel.getValueAt(puchaseTableModel.getRowCount() -1, 1) + " kr";
             }
             latestThree += "</html>";
             lastThreePurchases.setText(latestThree);
@@ -888,7 +883,6 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
@@ -912,7 +906,6 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JButton saveNotes;
     private javax.swing.JMenuItem sendToServerMenuItem;
     private javax.swing.JTabbedPane settings;
-    private javax.swing.JTextField swishPerson;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 

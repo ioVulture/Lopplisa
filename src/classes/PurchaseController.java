@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -84,11 +85,52 @@ public class PurchaseController {
         }
         return true;
     }
+    
+    public boolean sendPaymentTypeTotalsToServer() throws MalformedURLException, IOException {
+        Map<String, Integer> paymentTypeTotals = getPaymentTypeTotals();
+        
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("typeTotals=");
+        for (Map.Entry typeTotal : paymentTypeTotals.entrySet()) {
+            sb.append(typeTotal.getKey() + ":" + typeTotal.getValue() + ",");
+        }
 
+        String urlString = propertiesHandler.getPropertyValue("remote.server.typeTotals.url") + propertiesHandler.getPropertyValue("remote.server.password");
+        System.out.println("urlString:" + urlString);
+        URL url = new URL(urlString);
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        con.setDoOutput(true);
+        con.getOutputStream().write(sb.toString().getBytes("UTF-8"));
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(sb.toString());
+        wr.flush();
+        wr.close();
+
+        int responseCode = con.getResponseCode();
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        return false;
+
+    }
+    
     public boolean sendPurchasesToServer() throws FileNotFoundException, IOException {
 
         Map<String, Integer> sellerTotals = getSellersTotals();
-
+       //sendPaymentTypeTotalsToServer();
+        //System.out.println(sendPaymentTypeTotalsToServer());
         StringBuilder sb = new StringBuilder();
         sb.append("sellerTotals=");
         for (Map.Entry sellerTotal : sellerTotals.entrySet()) {
@@ -162,6 +204,45 @@ public class PurchaseController {
         return sellersMap;
     }
 
+    private TreeMap<String, Integer> getPaymentTypeTotals() throws FileNotFoundException, IOException {
+
+        File[] files = new File("purchases").listFiles();
+
+        SellersController sellers = new SellersController();
+        TreeMap<String, Integer> typeTotals = sellers.getSellers();
+        
+        for (File file : files) {
+
+            if (file.isFile() && !file.getName().startsWith("0-")) {
+
+                Scanner scanner = new Scanner(new File(file.getAbsolutePath()));
+                String text = scanner.next();
+
+                final JsonNode arrNode = new ObjectMapper().readTree(text).get("purchase");
+                final JsonNode typeNode = new ObjectMapper().readTree(text).get("type");
+                
+                if (arrNode.isArray()) {
+                    for (final JsonNode objNode : arrNode) {
+                        String code = objNode.get("code").getTextValue();
+                        Integer total = objNode.get("price").getIntValue();
+                         
+                        Integer currentTotal = typeTotals.get(code);
+                        typeTotals.remove(code);
+
+                        currentTotal = currentTotal + total;
+          
+                        typeTotals.put(typeNode.getTextValue(), currentTotal);
+
+                    }
+                }
+                
+                scanner.close();
+            }
+        }
+
+        return typeTotals;
+    }
+       
     public void addPurchaseToTotals() throws FileNotFoundException, IOException {
       
         StringBuilder sb = new StringBuilder();
