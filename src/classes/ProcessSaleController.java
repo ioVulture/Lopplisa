@@ -24,7 +24,7 @@ public class ProcessSaleController {
     public void updateRow (Integer price, String code, Integer newPrice) {
         sale.updateSoldItem(price, code, newPrice);
     }
-    public void makeNewSale(int total, long time) throws IOException {
+    public void makeNewSale(int total, long time, String type) throws IOException {
  
     
         String fileName =  total + "-" + time + "-purchases.txt";
@@ -32,7 +32,7 @@ public class ProcessSaleController {
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {
-            out.print("{\"purchase\":[");
+            out.print("{\"type\":\""+ type +"\",\"purchase\":[");
             int i = 0;
             for (SoldItem soldItem : sale.getList()) {
             

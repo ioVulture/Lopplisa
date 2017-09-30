@@ -92,6 +92,7 @@ public class SaleJFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lastThreePurchases = new javax.swing.JLabel();
+        swishPerson = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         advancedMenu = new javax.swing.JMenu();
@@ -396,6 +397,9 @@ public class SaleJFrame extends javax.swing.JFrame {
         lastThreePurchases.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         getContentPane().add(lastThreePurchases, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 440, 180, 70));
 
+        swishPerson.setText("swishperson");
+        getContentPane().add(swishPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 190, -1));
+
         menu.setText("File");
         menu.setFont(new java.awt.Font("Segoe UI Light", 0, 12)); // NOI18N
 
@@ -506,11 +510,19 @@ public class SaleJFrame extends javax.swing.JFrame {
         int total = processSaleController.getSale().getTotal();
         Date date = new Date();
         long time = date.getTime();
-        int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
-
-        if (res == JOptionPane.OK_OPTION) {
+        //int res = JOptionPane.showConfirmDialog(null, "Att betala: " + total + " kr", "", JOptionPane.OK_CANCEL_OPTION);
+        String[] buttons = { "Swish", "Kon-tanter", "Avbryt" };
+        int res = JOptionPane.showOptionDialog(null, "Att betala: " + total + " kr", "Att betala",
+        JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[2]);
+     
+        
+        if (res == 0 || res == 1) {
             try {
-                processSaleController.makeNewSale(total, time);
+                if(res == 0) {
+                    processSaleController.makeNewSale(total, time, "swish");
+                } else {
+                    processSaleController.makeNewSale(total, time, "kontant");
+                }
                 
             } catch (IOException ex) {
                 Logger.getLogger(SaleJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -552,6 +564,7 @@ public class SaleJFrame extends javax.swing.JFrame {
             }
             codeIdInput.requestFocus();
         }
+        
         return false;
     }
     
@@ -896,6 +909,7 @@ public class SaleJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel salesTotal;
     private javax.swing.JButton saveNotes;
     private javax.swing.JMenuItem sendToServerMenuItem;
+    private javax.swing.JTextField swishPerson;
     private javax.swing.JTabbedPane tabPane;
     // End of variables declaration//GEN-END:variables
 
